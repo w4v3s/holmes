@@ -30,6 +30,7 @@ function searchBarMove(){
             padding:"30px"
         }, 1000, function() {
         });
+        $(".div-container").fadeIn("medium")
         searchPage = true;
         $(".title-container").fadeOut("medium");
     }
