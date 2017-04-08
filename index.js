@@ -1,11 +1,17 @@
 /**
  * Created by andre on 4/8/2017.
  */
+
+console.log('starting');
 //Required attributes
-var express = require('express');
 var $ = require('jquery');
+var request = require('request');
+var express = require('express');
 var http = require('http');
 var fs = require('fs');
+var Bing = require('node-bing-api');
+var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
+var AYLIENTextAPI = require('aylien_textapi');
 
 //Global
 var bluemix = {
@@ -15,6 +21,10 @@ var bluemix = {
 };
 var aylien_key = "bd308ed5f3710b40d6e280fafd4d222e";
 var aylien_app_id = "5ceffad9";
+var bing_key1 = "5c2e5368e1df4929b688a0f229ba6fc0";
+var bing_key2 = "cc0c117b81c54269a7c1af16b35d28d7";
+var CORE_key = "53Ictd96ZekQql2yfzgCTLE7mUwpnVsb";
+var DIFF_key = "e5d2443849dcf55543df0010a2daf5d6";
 
 var app = express();
 
@@ -31,19 +41,23 @@ app.use(express.static(__dirname + '/public'));
 */
 
 /*Setup*/
-// var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
-//
-// var nlu = new NaturalLanguageUnderstandingV1({
-//     username: bluemix.username,
-//     password: bluemix.password,
-//     version_date: NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
-// });
-//
-// var AYLIENTextAPI = require('aylien_textapi');
-// var textapi = new AYLIENTextAPI({
-//     application_id: aylien_app_id,
-//     application_key: aylien_key
-// });
+console.log('setup');
+
+var BingWebSearch = Bing({ accKey: bing_key1 });
+
+
+var natural_language_understanding = new NaturalLanguageUnderstandingV1({
+    'username': bluemix.username,
+    'password': bluemix.password,
+    'version_date': '2017-02-27'
+});
+
+
+var textapi = new AYLIENTextAPI({
+    application_id: aylien_app_id,
+    application_key: aylien_key
+});
+
 
 /*Examples*/
 // nlu.analyze({
@@ -61,7 +75,7 @@ app.use(express.static(__dirname + '/public'));
 //     else
 //         console.log(JSON.stringify(response, null, 2));
 // });
-//
+// //
 // textapi.summarize({
 //     url: 'http://techcrunch.com/2015/04/06/john-oliver-just-changed-the-surveillance-reform-debate',
 //     sentences_number: 1
@@ -74,60 +88,239 @@ app.use(express.static(__dirname + '/public'));
 // });
 
 
-app.post('/search', function(request, response) {
-    request.on("data",function(chunk){
+// app.post('/search', function(request, response) {
+//     request.on("data",function(chunk){
+//         var str = ''+chunk;
+//         var question = str.substring(str.indexOf("=")+1,str.length);
+//         question = question.replace(/\+/g, " ");
+//         console.log(question);
+//
+//         BingWebSearch.web(question, {
+//             top: 10
+//         }, function(error, res, body){
+//             var webpages = [];
+//             var titles = [];
+//             for(a = 0; a<10; a++){
+//                 webpages.push(body.webPages.value[a].displayUrl);
+//                 titles.push(body.webPages.value[a].name);
+//             }
+//             console.log(webpages);
+//             console.log(titles);
+//
+//             var ajaxCallsRemaining = 10;
+//             var sentiment = [];
+//             var keywords = [];
+//             var summaries = [];
+//             var secondary = [];
+//
+//             webpages.forEach(function(arrayElement) {
+//                 var parameters = {
+//                     'url': arrayElement,
+//                     'features': {
+//                         'sentiment': {
+//                             'limit': 5
+//                         },
+//                         'keywords':{
+//                             'limit': 5
+//                         },
+//                         'concepts':{
+//                             'limit': 5
+//                         }
+//                     }
+//                 };
+//                 natural_language_understanding.analyze(parameters, function(err, res) {
+//                     if (err) {
+//                         console.log('error', err);
+//                         // --ajaxCallsRemaining;
+//                         // if (ajaxCallsRemaining <= 0) {
+//                         //     response.send([titles, webpages,sentiment,keywords]);
+//                         // }
+//                         sentiment.push(["None"]);
+//                         keywords.push(["None"]);
+//                     }
+//                     else{
+//                         var s = [];
+//                         var k = [];
+//                         var c = [];
+//                         for(a = 0; a<res.keywords.length;a++){
+//                             k.push(res.keywords[a].text);
+//                         }
+//                         for(a = 0; a<res.sentiment.length;a++){
+//                             s.push(res.sentiment.document.label);
+//                         }
+//                         for(a = 0; a<res.concepts.length;a++){
+//                             k.push(res.concepts[a].text);
+//                         }
+//                         console.log(k);
+//                         console.log(s);
+//                         sentiment.push(s);
+//                         keywords.push(k);
+//                         secondary.push(c);
+//                         // --ajaxCallsRemaining;
+//                         // if (ajaxCallsRemaining <= 0) {
+//                         //     response.send([titles, webpages,sentiment,keywords]);
+//                         // }
+//
+//                         textapi.summarize({
+//                             url: arrayElement,
+//                             sentences_number: 1
+//                         }, function(error, res) {
+//                             if (error === null) {
+//                                 summaries.push(res.sentences[0]);
+//                                 --ajaxCallsRemaining;
+//                                 if (ajaxCallsRemaining <= 0) {
+//                                     response.send([titles,sentiment,keywords,summaries]);
+//                                 }
+//                             }
+//                             else{
+//                                 console.log(error);
+//                                 --ajaxCallsRemaining;
+//                             }
+//                         });
+//                     }
+//
+//                 });
+//             });
+//
+//
+//         });
+//     });
+// });
+
+app.post('/fetch', function(req, response) {
+    req.on("data",function(chunk){
         var str = ''+chunk;
-        var category = "music";
-        var language = "en";
-        var country = "us";
+        var article = str.substring(str.indexOf("=")+1,str.length);
 
-        var options = {
-            host: 'newsapi.org',
-            method: 'GET',
-            path: '/v1/sources?category='+category+'&language='+language+'&country='+country
-        };
-        callback = function(res) {
-            var str = '';
-            res.on('data', function (c) {
-                str += c;
-            });
-            res.on('end', function () {
-                response.send(str);
-            });
-        };
-        http.request(options, callback).end();
+        request("https://api.diffbot.com/v3/article?token="+DIFF_key+"&url="+article,function (error, resp, body) {
+            if (!error && resp.statusCode == 200) {
+                var body = JSON.parse(body);
+                response.send(body);
+            }
+        });
+
     });
 });
 
-app.post('/newsarticles', function(request, response) {
-    request.on("data",function(chunk){
+app.post('/search', function(req, response) {
+    req.on("data",function(chunk){
         var str = ''+chunk;
-        var source= "cnn";
+        var question = str.substring(str.indexOf("=")+1,str.length);
+        question = question.replace(/\+/g, " ");
+        console.log(question);
 
-        var options = {
-            host: 'newsapi.org',
-            method: 'GET',
-            path: '/v1/articles?apiKey='+apiKey+'&source='+source
-        };
-        callback = function(res) {
-            var str = '';
-            res.on('data', function (c) {
-                str += c;
-            });
-            res.on('end', function () {
-                response.send(str);
-            });
-        };
-        http.request(options, callback).end();
+        request("https://core.ac.uk:443/api-v2/search/"+question+"?page=1&pageSize=10&apiKey="+CORE_key,function (error, resp, body) {
+            if (!error && resp.statusCode == 200) {
+                var body = JSON.parse(body);
+                var articles = [];
+                for(a = 0; a<10; a++){
+                    articles.push(body.data[a].id);
+                }
+
+                var ajaxCallsRemaining = 10;
+                var titles = [];
+                var url = [];
+                var sentiment = [];
+                var keywords = [];
+                var summaries = [];
+                var secondary = [];
+
+                articles.forEach(function(articleId){
+                    request("https://core.ac.uk:443/api-v2/articles/get/"+articleId+"?metadata=true&fulltext=true&citations=true&urls=true&apiKey="+CORE_key, function (error, resp, body) {
+                        if(error) {
+                            --ajaxCallsRemaining;
+                            titles.push(["None"]);
+                            url.push(["None"]);
+                            sentiment.push(["None"]);
+                            keywords.push(["None"]);
+                            summaries.push(["None"]);
+                            secondary.push(["None"]);
+                            if (ajaxCallsRemaining <= 0) {
+                                response.send([titles,url, keywords, summaries,secondary,sentiment]);
+                            }
+                            console.log(error);
+                        }
+                        if (!error && resp.statusCode == 200) {
+                            var body = JSON.parse(body);
+                            titles.push(body.data.title);
+                            url.push(body.data.fulltextUrls[0]);
+
+                            var parameters = {
+                                'url': body.data.fulltextUrls[0],
+                                'features': {
+                                    'sentiment': {
+                                        'limit': 5
+                                    },
+                                    'keywords':{
+                                        'limit': 5
+                                    },
+                                    'concepts':{
+                                        'limit': 5
+                                    }
+                                }
+                            };
+                            natural_language_understanding.analyze(parameters, function(err, res) {
+                                if (err) {
+                                    console.log('error', err);
+                                    sentiment.push(["None"]);
+                                    keywords.push(["None"]);
+                                    summaries.push(["None"]);
+                                    secondary.push(["None"]);
+                                    --ajaxCallsRemaining;
+                                    if (ajaxCallsRemaining <= 0) {
+                                        response.send([titles,url, keywords, summaries,secondary,sentiment]);
+                                    }
+                                }
+                                else{
+                                    var s = [];
+                                    var k = [];
+                                    var c = [];
+                                    for(a = 0; a<res.keywords.length;a++){
+                                        k.push(res.keywords[a].text);
+                                    }
+                                    s.push(res.sentiment.document.label);
+                                    for(a = 0; a<res.concepts.length;a++){
+                                        c.push(res.concepts[a].text);
+                                    }
+                                    console.log(k);
+                                    console.log(s);
+                                    sentiment.push(s);
+                                    keywords.push(k);
+                                    secondary.push(c);
+
+                                    textapi.summarize({
+                                        url: body.data.fulltextUrls[0],
+                                        sentences_number: 1
+                                    }, function(error, res) {
+                                        if (error === null) {
+                                            summaries.push(res.sentences[0]);
+                                            --ajaxCallsRemaining;
+                                            if (ajaxCallsRemaining <= 0) {
+                                                response.send([titles,url, keywords, summaries,secondary,sentiment]);
+                                            }
+                                        }
+                                        else{
+                                            console.log(error);
+                                            summaries.push(["None"]);
+                                            --ajaxCallsRemaining;
+                                            if (ajaxCallsRemaining <= 0) {
+                                                response.send([titles,url, keywords, summaries,secondary,sentiment]);
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+
+        });
+
     });
 });
 
-app.post('/default', function(request, response) {
-    request.on("data",function(chunk){
-        console.log('TEST COMPLETE');
-        response.send("Server Works");
-    });
-});
+
 
 //Runs app
 app.listen(app.get('port'), function() {

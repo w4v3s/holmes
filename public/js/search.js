@@ -34,8 +34,22 @@ function searchBarMove(){
 }
 function searchValues(){
     console.log("Searching...");
-
-    displayArticle();
+    var searchTerm = $("#search-bar").val();
+    getData(searchTerm);
+}
+function getData(term){
+    $.ajax({
+        type: "POST",
+        url: "/search",
+        data: {question:term},
+        success: function(result){
+            var obj = result;
+            console.log(result);
+        },
+        error:function(error){
+            console.log(error);
+        }
+    });
 }
 function displayArticle(){
     $(".article-view").fadeIn("slow");
