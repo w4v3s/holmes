@@ -195,6 +195,7 @@ app.post('/fetch', function(req, response) {
         request("https://api.diffbot.com/v3/article?token="+DIFF_key+"&url="+article,function (error, resp, body) {
             if (!error && resp.statusCode == 200) {
                 var body = JSON.parse(body);
+                var basicInfo = []
                 response.send(body);
             }
         });

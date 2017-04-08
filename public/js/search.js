@@ -4,8 +4,10 @@
 
 var searchPage = false;
 $(document).ready(function(){
+
     $(".title-container").animate({
-        top: "-=20vh"
+        top: "-=20vh",
+        opacity:1.0
     }, 1000, function() {
         $(".search-container").fadeIn("slow");
     });
@@ -27,8 +29,8 @@ function searchBarMove(){
             width: "40vw",
             padding:"30px"
         }, 1000, function() {
-            searchPage = true;
         });
+        searchPage = true;
         $(".title-container").fadeOut("medium");
     }
 }
