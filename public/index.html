@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Holmes</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <script type="text/javascript" src="js/jquery.js" defer></script>
+    <script type="text/javascript" src="js/bootstrap.js" defer></script>
+    <script type="text/javascript" src="js/search.js" defer></script>
+</head>
+<body>
+
+    <!-- TODO set up with react.js -->
+    <div class="search-view">
+        <div class="title-container">
+            <h1 class="title">Holmes</h1>
+        </div>
+    </div>
+    <div class="search-container" style="display: none">
+        <input id="search-bar" class = "form-control" type="text" class="smallfield" name="search-term" placeholder="Who is Teddy Roosevelt?" autocomplete="off" oninput="search()" autofocus>
+    </div>
+    <!-- TODO set up with react.js -->
+    <div class="article-view" style="display: none">
+        <div class="main-container">
+            <div class="main-content">
+                <button id="back">Back</button>
+                <button id="citation-show">Citation</button>
+                <div class="question-container">
+                    <h1 id="question">effect of Agent Orange in vietnam war</h1>
+                    <div class="secondary-container">
+                        <h2 class="secondary-question">What is Agent Orange</h2>
+                        <h2 class="secondary-question">Birth defects caused by Agent Orange</h2>
+                    </div>
+                </div>
+                <div class="article-container">
+                    <div class="article-list">
+                        <div class="article">
+                            <h3 class="article-name">
+                                Agent Orange
+                            </h3>
+                            <div class="reliability"></div>
+                            <div class="bias"></div>
+                            <h4 class="article-desc">
+                                Something about agent orange, pretty cool and stuff
+                            </h4>
+                            <div class="article-keywords">
+                                <h4 class="mini-keyword">agent orange</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="article-info">
+                        <div class="article-content">
+                            <h2 class="article-title">
+                                Wow you opened an article
+                            </h2>
+                            <p class="article-content">
+                                Nice meme nice meme
+                            </p>
+                            <button id="citation-button">
+                                CITE
+                            </button>
+                        </div>
+                        <div class="keyword-container">
+                            <h4 class="keyword">agent orange</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="citation-list">
+                    <div class="citation-name">
+                        Agent Orange Article
+                    </div>
+                    <div class="citation-cite">
+                        Last, FIrst. Whoa.
+                    </div>
+                    <button id="export">Export</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
