@@ -58,3 +58,9 @@ function displayArticle(){
     $(".article-view").fadeIn("slow");
     $(".secondary-container").fadeIn("slow");
 }
+function querySearch(){
+    var subject= document.getElementById("search-bar").value;
+    getData(subject);
+
+
+}
