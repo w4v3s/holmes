@@ -19,9 +19,16 @@ body{
     height: inherit;
     width: inherit;
 }
+h2,h3,h4,h5{
+    margin: 0;
+}
 .row{
     margin:0;
     height: inherit;
+}
+.col{
+    height: inherit;
+    padding: 2px;
 }
 
 /*#383838*/
@@ -45,7 +52,7 @@ body{
 .search-container{
     position: absolute;
     width:100vw;
-    top:50vh;
+    top:55vh;
     text-align: center;
 }
 .title-container{
@@ -54,11 +61,18 @@ body{
     text-align: center;
     width: 100vw;
     opacity: 0;
+
+}
+.title-logo{
+    top:35vh;
 }
 .title{
     text-align: center;
     font-size: 60px;
     font-family: 'Macondo', cursive;
+}
+.logo{
+    position: absolute;
 }
 #search-bar{
     display: inline;
@@ -70,38 +84,6 @@ body{
     color:white;
     border:none;
     width: 60vw;
-}
-.div-container{
-    opacity: 0.5;
-    background: rgba(0,0,0,0.3);
-    border-style:solid;
-    text-align: center;
-    border-radius: 30px;
-}
-.large-container{
-    /*opacity: 0.7;*/
-    position: absolute;
-    top:27vh;
-    height: 70vh;
-    width:35vw;
-    left: 3vw;
-    /*background-color: #96f2b6;
-    border-style:solid;
-    text-align: center;
-    border-radius: 30px;*/
-}
-.right-container{
-    position:absolute;
-    top:27vh;
-    height: 70vh;
-    width:55vw;
-    right: 3vw;
-}
-
-/*Article*/
-.article-div{
-    /*border-style: solid;*/
-    height: inherit;
 }
 
 /*Question*/
@@ -117,15 +99,138 @@ body{
 }
 .secondary-question{
     display:inline-block;
+    border: rgba(0,0,0,0.1) 2px solid;
     font-size: 20px;
     margin: 0 20px;
     padding: 15px;
-    border-radius: 50px;
+    border-radius: 5px;
+    color: whitesmoke;
     background: rgba(0,0,0,0.1);
-    transition: padding .2s ease;
+    transition: border .5s ease;
 }
 .secondary-question:hover{
     cursor: pointer;
-    padding: 17px;
-    transition: padding .2s ease;
+    border: rgba(0,0,0,0.8) 2px solid;
+}
+
+/*Articles*/
+.article-view{
+    position:absolute;
+    top: 200px;
+    height: 70vh;
+    width: inherit;
+}
+.article-field{
+    height: inherit;
+    padding: 20px;
+    border-radius: 20px;
+    background: rgba(0,0,0,0.1);
+}
+.col-gap{
+    padding:10px;
+}
+
+/*Article List*/
+.article{
+    padding: 20px;
+    background: rgba(0,0,0,0.1);
+    border: rgba(0,0,0,0.1) 2px solid ;
+}
+.article-list{
+    overflow: auto;
+}
+.article-list-elements{
+    margin-bottom: 15px;
+}
+.article-name{
+    font-size: 25px;
+}
+.article-desc{
+    font-size: 20px;
+}
+.article-keywords{
+    font-size: 18px;
+}
+.mini-keyword{
+    display: inline-block;
+    font-size: 18px;
+    padding: 10px;
+    background: rgba(255,255,255,0.1) ;
+}
+.reliability{
+    background: linear-gradient(141deg, rgba(255,0,0,0.5), rgba(255,250,10,0.5), rgba(0,255,0,0.5));
+    height: 10px;
+}
+
+/*Article Content*/
+.article-content{
+    padding: 30px;
+}
+.article-author{
+    font-size: 20px;
+}
+.article-text{
+    height: 80%;
+    padding: 5px;
+    font-size: 16px;
+    overflow: auto;
+}
+
+/*Toolbar*/
+.tb-button{
+    font-size: 30px;
+    text-align: center;
+}
+.tb-container{
+    min-height:50px;
+    min-width: 50px;
+    text-align: center;
+}
+.toolbar-container{
+    height: 90%;
+    overflow: auto;
+}
+.toolbar-buttons{
+    position: absolute;
+    bottom:30px;
+    height: auto;
+}
+.keywords-selected{
+    background: rgba(0,0,0,0.1);
+}
+.citation-selected{
+    background: rgba(255,255,255,0.1);
+}
+.notes-selected{
+    background: rgba(0,255,255,0.1);
+}
+.toolbar{
+    padding: 20px;
+}
+
+/*Toolbar Keywords*/
+.list-keyword{
+    display: inline-block;
+    font-size: 18px;
+    padding: 10px;
+    margin:5px;
+    background: rgba(255,255,255,0.1) ;
+}
+.list-keyword-selected{
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px;
+    margin:5px;
+    background: rgba(255,255,255,0.1) ;
+}
+.note-pad{
+    background: transparent;
+    width: 90%;
+    height: 90%;
+    max-width: 90%;
+    max-height: 90%;
+    min-width: 90%;
+    min-height: 90%;
+    color:white;
 }

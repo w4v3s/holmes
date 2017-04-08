@@ -10,96 +10,100 @@
 
     <script type="text/javascript" src="js/jquery.js" defer></script>
     <script type="text/javascript" src="js/bootstrap.js" defer></script>
-    <script src="https://unpkg.com/react@15/dist/react.min.js" defer></script>
-    <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js" defer></script>
+    <!--<script src="https://unpkg.com/react@15/dist/react.min.js" defer></script>-->
+    <!--<script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js" defer></script>-->
     <script type="text/javascript" src="js/search.js" defer></script>
 </head>
 <body>
     <div class="search-view">
-        <div class="title-container">
+        <div class="title-container title-text">
             <h1 class="title">dawn</h1>
+        </div>
+        <div class="title-container title-logo">
+            <img id="logo" src="img/dawn.png">
         </div>
     </div>
     <div class="search-container" style="display: none">
-        <input id="search-bar" class = "form-control" type="text" class="smallfield" name="search-term" placeholder="type your question here" autocomplete="off" oninput="searchBarMove()" onkeyup="querySearch()" autofocus>
+        <input id="search-bar" class = "form-control" type="text" class="smallfield" name="search-term" placeholder="type your question here" autocomplete="off" oninput="searchBarMove()" autofocus>
     </div>
-
-
-    <div class="row">
-        <div class="large-container div-container" style="display: none">
-            <div id="articleLinks">
-                <h1>Search Results</h1>
-                
-            </div>
-        </div>
-        <div class="right-container div-container" style="display: none">
-            <div class="row">
-                <div class="col-md-8 article-div" style="border-right-style:solid"></div>
-            <div class="col-md-4 article-div">
-                <h1>Key Words</h1>
-            </div> 
-            </div>
-    
-        </div>
-    </div>
-
     <div class="secondary-container" style="display: none">
         <h2 class="secondary-question">What is Agent Orange</h2>
         <h2 class="secondary-question">Birth defects caused by Agent Orange</h2>
     </div>
-    
-
-    
 
     <!-- TODO set up with react.js -->
     <div class="article-view" style="display: none">
-        <div class="main-container">
-            <div class="main-content">
-                <div class="article-container">
-                    <div class="article-list">
-                        <div class="article">
-                            <h3 class="article-name">
-                                Agent Orange
-                            </h3>
-                            <div class="reliability"></div>
-                            <div class="bias"></div>
-                            <h4 class="article-desc">
-                                Something about agent orange, pretty cool and stuff
-                            </h4>
-                            <div class="article-keywords">
-                                <h4 class="mini-keyword">agent orange</h4>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-gap col col-md-3">
+                <div class="article-field article-list">
+                    <div class="article">
+                        <h3 class="article-list-elements article-name">
+                            Agent Orange
+                        </h3>
+                        <h4 class="article-list-elements article-desc">
+                            Something about agent orange, pretty cool and stuff
+                        </h4>
+                        <div class="article-list-elements article-keywords">
+                            <h4 class="mini-keyword">agent orange</h4>
+                            <h4 class="mini-keyword">orange</h4>
+                        </div>
+                        <div class="reliability"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-gap col col-md-7">
+                <div class="row">
+                    <div class="col col-md-9">
+                        <div class="article-field article-content">
+                            <h2 class="article-list-elements article-title article-heading">
+                                Wow you opened an article
+                            </h2>
+                            <h2 class="article-list-elements article-author article-heading">
+                                Joe Smith
+                            </h2>
+                            <p class="article-text">
+                                In The Great Gatsby, blue is used quite frequency to create a feel for a specific scene or individual. In Nick’s description of Doctor T. J. Eckleburg, he states that the eyes on the billboard are blue and gigantic, building a tone of omniscience. These eyes, often seen as the eyes of God, are given the color to describe a depressing atmosphere over New York. It foreshadows the awful effects that occur to Gatsby, Wilson, providing a tone of dread. Without blue, the entire landscape of Wilson’s workshop and the city becomes less dreary. In addition, Fitzgerald uses blue to provide a depressing tone to the story after Myrtle’s death, enhancing the sadness and emptiness Nick feels, caught in these events. However, Fitzgerald also uses blue to describe Wilson’s eyes when Tom and Nick pull up at his shop. This can be an indication of Wilson’s loyalty to Tom, as Fitzgerald often refers to one’s eyes to describe a specific character. Throughout the story, Wilson is seen to interact with Tom as if he is a friend, despite Tom’s affair with his wife. Even after Daisy kills Myrtle, Tom is the one attempting to console Wilson. This use of blue is repeated when Cody gives Gatsby a blue coat as a gift, since Gatsby was always loyal to him. Although there isn’t much backstory about Gatsby’s experiences with Dan Cody, the splash of blue enhances the sense of Gatsby and Cody’s loyalty and friendship. Without the addition of color, there is a lack of feeling between the two friends, and Gatsby’s loss of his inheritance is less meaningful. Fitzgerald also uses blue to describe tranquility and peace. When Nick gazes out the window in New York during Tom and Myrtle’s party, the description of the blue sky helps the audience see Nick as mesmerized to the city life, breathing in the new environment. It enhances the haziness in the smoky apartment, and allows the audience to feel Nick’s wonder.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col col-md-3">
+                        <div class="article-field article-toolbox">
+                            <div class="toolbar-container keywords-selected">
+                                <div class="toolbar" id="keyword-list">
+                                    <h4 class="list-keyword">gatsby</h4>
+                                    <h4 class="list-keyword">nick</h4>
+                                    <h4 class="list-keyword-selected list-keyword">blue</h4>
+                                </div>
+                                <div class="toolbar" id="bibliography" style="display: none">
+                                    <h4 class="citation">Douglass, Frederick. <i>Narrative of the Life of Frederick Douglass.</i> N.p.: Dover Publications, 1995. Print.</h4>
+                                </div>
+                                <div class="toolbar" id="notes-panel" style="display: none">
+                                    <h4 class="note-pad">SUMMARIES</h4>
+                                </div>
+                            </div>
+                            <div class="toolbar-buttons row">
+                                <div class="col col-sm-4">
+                                    <div class="tb-container keywords-selected" id="keywords">
+                                        <span class="tb-button glyphicon glyphicon-list"></span>
+                                    </div>
+                                </div>
+                                <div class="col col-sm-4">
+                                    <div class="tb-container" id="citation">
+                                        <span class="tb-button glyphicon glyphicon-education"></span>
+                                    </div>
+                                </div>
+                                <div class="col col-sm-4">
+                                    <div class="tb-container" id="notes">
+                                        <span class="tb-button glyphicon glyphicon-pencil"></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="article-info">
-                        <div class="article-content">
-                            <h2 class="article-title">
-                                Wow you opened an article
-                            </h2>
-                            <p class="article-content">
-                                Nice meme nice meme
-                            </p>
-                            <button id="citation-button">
-                                CITE
-                            </button>
-                        </div>
-                        <div class="keyword-container">
-                            <h4 class="keyword">agent orange</h4>
-                        </div>
-                    </div>
                 </div>
-                <div class="citation-list">
-                    <div class="citation-name">
-                        Agent Orange Article
-                    </div>
-                    <div class="citation-cite">
-                        Last, FIrst. Whoa.
-                    </div>
-                    <button id="export">Export</button>
-                </div>
-                <button id="back">Back</button>
-                <button id="citation-show">Citation</button>
             </div>
+            <div class="col-md-1"></div>
         </div>
     </div>
 </body>
