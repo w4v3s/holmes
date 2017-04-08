@@ -62,28 +62,29 @@ body{
     border:none;
     width: 60vw;
 }
-.input-group{
-    margin: 1vw;
-}
 
 /*Question*/
-.question-view{
-    height: inherit;
-    width: inherit;
-}
-.question-container{
-    text-align: center;
-}
-#question{
-    text-align: center;
+.article-view{
+    width: 100vw;
 }
 .secondary-container{
-    text-align: center;
+    position: absolute;
+    margin-top: 110px;
     overflow: auto;
-    width: auto;
+    text-align: center;
+    width: 100vw;
 }
 .secondary-question{
-    float: left;
-    padding-right: 2vw;
-    padding-left: 2vw;
+    display:inline-block;
+    font-size: 20px;
+    margin: 0 20px;
+    padding: 15px;
+    border-radius: 50px;
+    background: rgba(0,0,0,0.1);
+    transition: padding .2s ease;
+}
+.secondary-question:hover{
+    cursor: pointer;
+    padding: 17px;
+    transition: padding .2s ease;
 }

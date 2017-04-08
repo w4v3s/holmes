@@ -9,8 +9,15 @@ $(document).ready(function(){
     }, 1000, function() {
         $(".search-container").fadeIn("slow");
     });
+
+    $("#search-bar").keydown(function(event){
+        if(event.which=="13")
+        {
+            searchValues();
+        }
+    });
 });
-function search(){
+function searchBarMove(){
     if (!searchPage){
         $(".search-container").animate({
             top: "30px"
@@ -18,12 +25,19 @@ function search(){
         });
         $("#search-bar").animate({
             width: "40vw",
-            fontsize:"20px",
-            padding:"30px",
+            padding:"30px"
         }, 1000, function() {
             searchPage = true;
-            $(".article-view").fadeIn("slow");
         });
         $(".title-container").fadeOut("medium");
     }
+}
+function searchValues(){
+    console.log("Searching...");
+
+    displayArticle();
+}
+function displayArticle(){
+    $(".article-view").fadeIn("slow");
+    $(".secondary-container").fadeIn("slow");
 }

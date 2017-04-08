@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/w4v3s/holmes/issues"
   },
-  "homepage": "https://github.com/w4v3s/holmes#readme"
+  "homepage": "https://github.com/w4v3s/holmes#readme",
+  "dependencies": {
+    "watson-developer-cloud": "^2.28.1"
+  }
 }
