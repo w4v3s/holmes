@@ -31,47 +31,47 @@ app.use(express.static(__dirname + '/public'));
 */
 
 /*Setup*/
-var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
-
-var nlu = new NaturalLanguageUnderstandingV1({
-    username: bluemix.username,
-    password: bluemix.password,
-    version_date: NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
-});
-
-var AYLIENTextAPI = require('aylien_textapi');
-var textapi = new AYLIENTextAPI({
-    application_id: aylien_app_id,
-    application_key: aylien_key
-});
+// var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
+//
+// var nlu = new NaturalLanguageUnderstandingV1({
+//     username: bluemix.username,
+//     password: bluemix.password,
+//     version_date: NaturalLanguageUnderstandingV1.VERSION_DATE_2017_02_27
+// });
+//
+// var AYLIENTextAPI = require('aylien_textapi');
+// var textapi = new AYLIENTextAPI({
+//     application_id: aylien_app_id,
+//     application_key: aylien_key
+// });
 
 /*Examples*/
-nlu.analyze({
-    'html': file_data, // Buffer or String
-    'features': {
-        'concepts': {},
-        'keywords': {},
-        'sentiment':{},
-        'emotion':{},
-        'categories':{}
-    }
-}, function(err, response) {
-    if (err)
-        console.log('error:', err);
-    else
-        console.log(JSON.stringify(response, null, 2));
-});
-
-textapi.summarize({
-    url: 'http://techcrunch.com/2015/04/06/john-oliver-just-changed-the-surveillance-reform-debate',
-    sentences_number: 1
-}, function(error, response) {
-    if (error === null) {
-        response.sentences.forEach(function(s) {
-            console.log(s);
-        });
-    }
-});
+// nlu.analyze({
+//     'html': file_data, // Buffer or String
+//     'features': {
+//         'concepts': {},
+//         'keywords': {},
+//         'sentiment':{},
+//         'emotion':{},
+//         'categories':{}
+//     }
+// }, function(err, response) {
+//     if (err)
+//         console.log('error:', err);
+//     else
+//         console.log(JSON.stringify(response, null, 2));
+// });
+//
+// textapi.summarize({
+//     url: 'http://techcrunch.com/2015/04/06/john-oliver-just-changed-the-surveillance-reform-debate',
+//     sentences_number: 1
+// }, function(error, response) {
+//     if (error === null) {
+//         response.sentences.forEach(function(s) {
+//             console.log(s);
+//         });
+//     }
+// });
 
 
 app.post('/search', function(request, response) {
