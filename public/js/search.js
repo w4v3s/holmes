@@ -6,15 +6,12 @@ var searchPage = false;
 var secondaries = [];
 var obj;
 var array;
+var dots;
 $(document).ready(function(){
-    var a = "I ate a chicken";
-    a = a.replace("ate","<b>chicken<\b>");
-    console.log(a);
-
     $(".title-container").animate({
         top: "-=25vh",
         opacity:1.0
-    }, 1000, function() {
+    }, 100, function() {
         $(".title-logo").fadeIn("slow");
         $(".search-container").fadeIn("slow");
     });
@@ -22,6 +19,7 @@ $(document).ready(function(){
     $("#search-bar").keydown(function(event){
         if(event.which=="13" && searchPage)
         {
+            searchBarMove();
             searchValues();
         }
     });
@@ -66,16 +64,30 @@ $(document).ready(function(){
 
 
     setupKeywordClick();
-    highlight();
-    notepadMemory();
+    //highlight();
+    //notepadMemory();
 
 });
+function startLoading(){
+    dots = window.setInterval( function() {
+        var wait = document.getElementById("wait");
+        if ( wait.innerHTML.length > 3 )
+            wait.innerHTML = ".";
+        else
+            wait.innerHTML += ".";
+    }, 1000);
+    $(".loading-view").fadeIn("slow");
+}
+function stopLoading(){
+    clearInterval(dots);
+    $(".loading-view").fadeOut("slow");
+}
 function setupKeywordClick(){
     $(".list-keyword").click(function(){
         $(".list-keyword").removeClass("list-keyword-selected");
         $(this).addClass("list-keyword-selected");
-        //$('.article-text').removeHighlight();  
-        $('.article-text').highlight($(this).text());  
+        $('.article-content p').removeHighlight();
+        $('.article-content p').highlight($(this).text());
     });
 }
 function highlight(){
@@ -95,6 +107,7 @@ function setupSecondaryClick(){
     $(".secondary-question").click(function(){
         var searchTerm = $(this).text();
         $("#search-bar").val(searchTerm);
+        $(".secondary-container").fadeOut("slow");
         getData(searchTerm);
     })
 }
@@ -130,6 +143,7 @@ function searchValues(){
     getData(searchTerm);
 }
 function getData(term){
+    startLoading();
     $.ajax({
         type: "POST",
         url: "/search",
@@ -138,6 +152,7 @@ function getData(term){
             obj = result;
             console.log(obj);
             resetInfo();
+            stopLoading();
             appendArticleList(obj);
             displayArticleView();
         },
@@ -188,9 +203,36 @@ function appendArticleList(){
                 list+="<h4 class=\"mini-keyword\">"+obj[i].keywords[a]+"</h4>";
             }
         }
-        list+="<\/div><div class=\"reliability\"></div></div>";
+        var percen = parseInt(Math.abs(obj[i].sentiment*100));
+        console.log(percen);
+        if(percen < 1){
+            list+="<\/div><div class=\"reliability\" id =\"A"+percen+"\">No Data";
+        }
+        else {
+            list += "<\/div><div class=\"reliability\" id =\"A" + percen + "\">Reliability";
+        }
+
+        list+="</div></div>";
+
     }
     $(list).appendTo("#article-list-container");
+    $("<div class='main-container'><div class='main-content'><h3 class=\"intro\">click on an article to proceed<\/h3></div></div>").appendTo(".article-content");
+
+    for(c = 0; c<obj.length;c++){
+        var percen = parseInt(Math.abs(obj[c].sentiment*100));
+        var bar = new ProgressBar.Line("#A"+percen, {
+            strokeWidth: 4,
+            easing: 'easeInOut',
+            duration: 1400,
+            color: '#FFEA82',
+            fill: 'rgba(255, 255, 255, 0.1)',
+            trailColor: '#eee',
+            trailWidth: 1,
+            svgStyle: {width: percen+"%", height: '100%'}
+        });
+
+        bar.animate(1.0);
+    }
 }
 function displayArticleView(){
     $(".article-view").fadeIn("slow");

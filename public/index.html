@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Dawn</title>
     <link href="https://fonts.googleapis.com/css?family=Macondo" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/bootstrap-theme.css">
     <link rel="stylesheet" href="css/style.css">
@@ -13,7 +14,9 @@
     <script type="text/javascript" src="js/bootstrap.js" defer></script>
     <!--<script src="https://unpkg.com/react@15/dist/react.min.js" defer></script>-->
     <!--<script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js" defer></script>-->
+    <script type="text/javascript" src="js/progressbar.min.js" defer></script>
     <script type="text/javascript" src="js/search.js" defer></script>
+
 </head>
 <body>
     <div class="search-view">
@@ -25,11 +28,19 @@
         </div>
     </div>
     <div class="search-container" style="display: none">
-        <input id="search-bar" class = "form-control" type="text" class="smallfield" name="search-term" placeholder="type your question here" autocomplete="off" oninput="searchBarMove()" autofocus>
+        <input id="search-bar" class = "form-control" type="text" class="smallfield" name="search-term" placeholder="type something" autocomplete="off" oninput="searchBarMove()" autofocus>
     </div>
     <div id="secondary-container" class="secondary-container" style="display: none">
         <h2 class="secondary-question">What is Agent Orange</h2>
         <h2 class="secondary-question">Birth defects caused by Agent Orange</h2>
+    </div>
+
+    <div class="loading-view" style="display: none;">
+        <div class="main-container">
+            <div class="main-content">
+                <span id="wait"></span>
+            </div>
+        </div>
     </div>
 
     <!-- TODO set up with react.js -->

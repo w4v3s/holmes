@@ -28,13 +28,20 @@ var AYLIENTextAPI = require('aylien_textapi');
 //       "username": "33169e80-2b23-428f-94d1-1bd35558538c",
 //       "password": "IuUo24iXQTxT"
 // }
+// var bluemix = {
+//   "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
+//   "username": "ef867255-921e-43ad-aa39-cf5def58a21e",
+//   "password": "NWT4zDKV1T3Z"
+// };
 var bluemix = {
-  "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
-  "username": "ef867255-921e-43ad-aa39-cf5def58a21e",
-  "password": "NWT4zDKV1T3Z"
-}
-var aylien_key = "bd308ed5f3710b40d6e280fafd4d222e";
-var aylien_app_id = "5ceffad9";
+    "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
+    "username": "4d79f25d-d96b-491b-9731-3b5057567494",
+    "password": "BfWJHGKW2SB0"
+};
+// var aylien_key = "bd308ed5f3710b40d6e280fafd4d222e";
+// var aylien_app_id = "5ceffad9";
+var aylien_key = "c49162c07d76aef113d427c8bf7b5beb";
+var aylien_app_id = "f1ebb697";
 var bing_key1 = "5c2e5368e1df4929b688a0f229ba6fc0";
 var bing_key2 = "cc0c117b81c54269a7c1af16b35d28d7";
 var CORE_key = "53Ictd96ZekQql2yfzgCTLE7mUwpnVsb";
@@ -375,7 +382,7 @@ app.post('/fetch', function(req, response) {
                                                 for(a = 0; a<res.keywords.length;a++){
                                                     k.push(res.keywords[a].text);
                                                 }
-                                                s.push(res.sentiment.document.label);
+                                                s.push(res.sentiment.document.score);
                                                 for(a = 0; a<res.concepts.length;a++){
                                                     c.push(res.concepts[a].text);
                                                 }
