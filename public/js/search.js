@@ -123,13 +123,16 @@ function getData(term,reset){
     });
 }
 function appendSecondary(obj){
-      for(var i=0;i<obj[2].length;i++)
+    for(var i=0;i<obj[2].length;i++)
     {
         $("<h2/>", {
-            id: 'keyword_'+i,
+            id: 'tags_'+i,
             html: obj[6][i],
-            class:"secondary-question"
+            class:"secondary-question",
+            style: "display:none"
         }).appendTo($("secondary-container"));
+
+        $("#tags_"+i).fadeIn("medium");
     }  
 }
 function appendKeywords(obj){
@@ -139,8 +142,11 @@ function appendKeywords(obj){
         $("<div/>", {
             id: 'keyword_'+i,
             html: '<h4 class="list-keyword">'+obj[4][i]+'</h4>',
-            class:"article"
+            class:"article",
+            style: "display:none"
         }).appendTo($("keyword-list"));
+
+        $("#keyword_"+i).fadeIn("medium");
     }
 }
 function appendArticleList(obj){
@@ -149,7 +155,8 @@ function appendArticleList(obj){
         $("<div/>", {
             id: 'article-entry_'+i,
             html: "<h3 class='article-list-elements article-name'>"+obj[0][i]+"</h3> <h4 class='article-list-elements article-desc'>"+obj[5][i]+"</h4>",
-            class:"article"
+            class:"article",
+            style: "display:none"
         }).appendTo($("#article-list-container"));
         $("<div/>", {
             id: 'mini-keyword_'+i,
@@ -182,6 +189,8 @@ function appendArticleList(obj){
             id: 'bias_'+i,
             class:"reliability"
         }).appendTo($("#article-entry"+i));
+
+        $("#article-entry_"+i).fadeIn("slow");
     }
 
 }
@@ -190,9 +199,10 @@ function appendArticle(obj){
     $("<div/>", {
         id: 'article_'+i,
         html: "<h2 class='article-list-elements article-title article-heading'>"+obj[0][i]+"</h2> <h2 class='article-list-elements article-author article-heading'>"+obj[3][i]+"</h2> <p class='article-text'>"+obj[2][i]+"</p>",
-        class:"article-field article-content"
+        class:"article-field article-content",
+        style: "display:none"
     }).appendTo($("#article-container"));
-    
+    $("#article_"+i).fadeIn("slow");
 }
 function setUpSecondary(val, reset){
     if(reset){
