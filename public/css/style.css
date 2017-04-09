@@ -111,7 +111,7 @@ h2,h3,h4,h5{
     cursor: pointer;
     border: rgba(0,0,0,0.8) 2px solid;
 }
-.highlight { background-color: yellow }
+.highlight { background-color: rgba(0, 100, 163, 0.6)}
 
 /*Articles*/
 .article-view{
@@ -187,12 +187,11 @@ h2,h3,h4,h5{
     text-align: center;
 }
 .toolbar-container{
-    height: 90%;
+    height: 91%;
     overflow: auto;
 }
 .toolbar-buttons{
-    position: absolute;
-    bottom:30px;
+    position: inline-block;
     height: auto;
 }
 .keywords-selected{
@@ -233,4 +232,31 @@ h2,h3,h4,h5{
     min-width: 90%;
     min-height: 90%;
     color:white;
+}
+
+/*Scrollbar*/
+
+.scrollbar
+{
+    float: left;
+    overflow-y: scroll;
+}
+.style-1::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 6px;
+    background-color: #F5F5F5;
+}
+
+.style-1::-webkit-scrollbar
+{
+    width: 8px;
+    background-color: #F5F5F5;
+}
+
+.style-1::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
 }

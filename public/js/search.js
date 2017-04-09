@@ -19,7 +19,7 @@ $(document).ready(function(){
     });
 
     $("#search-bar").keydown(function(event){
-        if(event.which=="13")
+        if(event.which=="13" && searchPage)
         {
             searchValues();
         }
@@ -62,7 +62,8 @@ $(document).ready(function(){
     $(".list-keyword").click(function(){
         $(".list-keyword").removeClass("list-keyword-selected");
         $(this).addClass("list-keyword-selected");
-        $('.article-text').highlight($(this).text());    
+        $('.article-text').removeHighlight();  
+        $('.article-text').highlight($(this).text());   
     });
 });
 
@@ -103,7 +104,7 @@ function searchBarMove(){
 function searchValues(){
     console.log("Searching...");
     var searchTerm = $("#search-bar").val();
-    getData(searchTerm,true);
+    // getData(searchTerm,true);
     displayArticleView();
 }
 function getData(term,reset){
