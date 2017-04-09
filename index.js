@@ -25,6 +25,9 @@ var bing_key2 = "cc0c117b81c54269a7c1af16b35d28d7";
 var CORE_key = "53Ictd96ZekQql2yfzgCTLE7mUwpnVsb";
 var DIFF_key = "e5d2443849dcf55543df0010a2daf5d6";
 var ebib_key = "e8d16813ad492175b055390bd9d62c2b";
+var scopus_key = "f5d063cf0af897101eb37b9294d9c731";
+
+
 var app = express();
 
 app.set('port', (process.env.PORT || 5000));
@@ -85,7 +88,6 @@ var textapi = new AYLIENTextAPI({
 //         });
 //     }
 // });
-
 
 // app.post('/search', function(request, response) {
 //     request.on("data",function(chunk){
@@ -186,6 +188,44 @@ var textapi = new AYLIENTextAPI({
 //     });
 // });
 
+function xmlToJson(xml) {
+
+    // Create the return object
+    var obj = {};
+
+    if (xml.nodeType == 1) { // element
+        // do attributes
+        if (xml.attributes.length > 0) {
+            obj["@attributes"] = {};
+            for (var j = 0; j < xml.attributes.length; j++) {
+                var attribute = xml.attributes.item(j);
+                obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
+            }
+        }
+    } else if (xml.nodeType == 3) { // text
+        obj = xml.nodeValue;
+    }
+
+    // do children
+    if (xml.hasChildNodes()) {
+        for(var i = 0; i < xml.childNodes.length; i++) {
+            var item = xml.childNodes.item(i);
+            var nodeName = item.nodeName;
+            if (typeof(obj[nodeName]) == "undefined") {
+                obj[nodeName] = xmlToJson(item);
+            } else {
+                if (typeof(obj[nodeName].push) == "undefined") {
+                    var old = obj[nodeName];
+                    obj[nodeName] = [];
+                    obj[nodeName].push(old);
+                }
+                obj[nodeName].push(xmlToJson(item));
+            }
+        }
+    }
+    return obj;
+};
+
 app.post('/fetch', function(req, response) {
     req.on("data",function(chunk){
         console.log("diffbot");
@@ -203,171 +243,336 @@ app.post('/fetch', function(req, response) {
     });
 });
 
-app.post('/search', function(req, response) {
-    req.on("data",function(chunk){
-        var str = ''+chunk;
-        var question = str.substring(str.indexOf("=")+1,str.length);
-        question = question.replace(/\+/g, " ");
-        console.log(question);
+    app.post('/search', function(req, response) {
+        req.on("data",function(chunk){
+            var str = ''+chunk;
+            var question = str.substring(str.indexOf("=")+1,str.length);
+            question = question.replace(/\+/g, " ");
+            console.log(question);
 
-        request("https://core.ac.uk:443/api-v2/search/"+question+"?page=1&pageSize=10&apiKey="+CORE_key,function (error, resp, body) {
-            if (!error && resp.statusCode == 200) {
-                console.log("Get articles");
-                body = JSON.parse(body);
-                var articles = [];
-                for(a = 0; a<10; a++){
-                    articles.push(body.data[a].id);
-                }
+            request("http://www.nature.com/opensearch/request?query="+question+"&httpAccept=application/json",function (error, resp, body) {
+                if (!error && resp.statusCode == 200) {
+                    console.log("Get articles");
+                    body = JSON.parse(body);
 
-                var ajaxCallsRemaining = 10;
-                var titles = [];
-                var url = [];
-                var sentiment = [];
-                var keywords = [];
-                var summaries = [];
-                var secondary = [];
-                var bibliography = [];
+                    var ajaxCallsRemaining = 10;
+                    var entries = [];
+                    var titles = [];
+                    var url = [];
+                    var abstract = [];
+                    var authors = [];
+                    var keywords = [];
+                    var summaries = [];
+                    var secondary = [];
+                    var sentiment = [];
+                    var bibliography = [];
 
-                articles.forEach(function(articleId){
-                    console.log("GO GO GO!");
-                    request("https://core.ac.uk:443/api-v2/articles/get/"+articleId+"?metadata=true&fulltext=true&citations=true&urls=true&apiKey="+CORE_key, function (error, resp, body) {
-                        if(error) {
-                            --ajaxCallsRemaining;
-                            titles.push(["None"]);
-                            url.push(["None"]);
-                            sentiment.push(["None"]);
-                            keywords.push(["None"]);
-                            summaries.push(["None"]);
-                            secondary.push(["None"]);
-                            bibliography.push(["None"]);
-                            if (ajaxCallsRemaining <= 0) {
-                                response.send([titles,url, keywords, summaries,secondary,sentiment, bibliography]);
-                            }
-                            console.log(error);
-                        }
-                        if (!error && resp.statusCode == 200) {
-                            body = JSON.parse(body);
-                            titles.push(body.data.title);
-                            url.push(body.data.fulltextUrls[0]);
+                    if(body.feed.entry.length<=0){
+                        response.send([titles,url,abstract,authors, keywords, summaries,secondary,sentiment, bibliography]);
+                    }
+                    for(a = 0; a<10; a++){
+                        entries.push(body.feed.entry[a]);
+                        titles.push(body.feed.entry[a].title);
+                        url.push(body.feed.entry[a].link);
+                        abstract.push(body.feed.entry[a]['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:description']);
+                        authors.push(body.feed.entry[a]['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator']);
+                    }
 
-                            request({
-                                url: "https://api.citation-api.com/2.1/rest/cite",
-                                json: true, multipart:{
-                                    data: {
-                                        "key": ebib_key,
-                                        "source": "journal",
-                                        "style": "mla7",
-                                        "journal": {
-                                            "title": body.data.title
-                                        },
-                                        "pubtype": {
-                                            "main": "pubjournal"
-                                        },
-                                        "pubjournal": {
-                                            "title": body.data.publisher,
-                                            "year": body.data.year
-                                        },
-                                        "contributors": [{
+                    response.send([titles,url,abstract,authors, keywords, summaries,secondary,sentiment, bibliography]);
+
+                    entries.forEach(function(entry){
+                        console.log("GO GO GO!");
+
+                                var autho = [];
+                                if (entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator'] != null) {
+                                    for (c = 0; c < entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator'].length; c++) {
+                                        autho.push({
                                             "function": "author",
-                                            "first": body.data.authors.substring(0, body.data.authors.firstIndexOf(",")),
-                                            "middle": body.data.authors.sustring(body.data.authors.substring(body.data.authors.firstIndexOf(",")+1).firstIndexOf(" ")),
-                                            "last": body.data.authors.substring(body.data.authors.firstIndexOf(",")+1, body.data.authors.substring(body.data.authors.firstIndexOf(",")+1).firstIndexOf(" "))
-                                        }
-                                        ]
+                                            "first": entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator'][c].substring(0, entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator'][c].indexOf(" ")),
+                                            "middle": entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator'][c].substring(entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator'][c].indexOf(" "), entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator'][c].lastIndexOf(" ")),
+                                            "last": entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator'][c].substring(entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator'][c].lastIndexOf(" "))
+                                        });
                                     }
                                 }
-                            }, function (error, response, info) {
-                                if (!error && response.statusCode === 200) {
-                                    bibliography.push(JSON.parse(info.data));
-                                    var parameters = {
-                                        'url': body.data.fulltextUrls[0],
-                                        'features': {
-                                            'sentiment': {
-                                                'limit': 5
+                                request({
+                                    url: "https://api.citation-api.com/2.1/rest/cite",
+                                    json: true, multipart:{
+                                        data: {
+                                            "key": ebib_key,
+                                            "source": "journal",
+                                            "style": "mla7",
+                                            "journal": {
+                                                "title": entry.title
                                             },
-                                            'keywords':{
-                                                'limit': 5
+                                            "pubtype": {
+                                                "main": "pubjournal"
                                             },
-                                            'concepts':{
-                                                'limit': 5
-                                            }
+                                            "pubjournal": {
+                                                "title": entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:publisher'],
+                                                "year": entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['prism:publicationDate'].substring(0,4)
+                                            },
+                                            "contributors":autho
                                         }
-                                    };
-                                    natural_language_understanding.analyze(parameters, function(err, res) {
-                                        console.log("Actually doing stuff");
-                                        if (err) {
-                                            console.log('error', err);
-                                            sentiment.push(["None"]);
-                                            keywords.push(["None"]);
-                                            summaries.push(["None"]);
-                                            secondary.push(["None"]);
-                                            --ajaxCallsRemaining;
-                                            if (ajaxCallsRemaining <= 0) {
-                                                response.send([titles,url, keywords, summaries,secondary,sentiment, bibliography]);
-                                            }
-                                        }
-                                        else{
-                                            var s = [];
-                                            var k = [];
-                                            var c = [];
-                                            for(a = 0; a<res.keywords.length;a++){
-                                                k.push(res.keywords[a].text);
-                                            }
-                                            s.push(res.sentiment.document.label);
-                                            for(a = 0; a<res.concepts.length;a++){
-                                                c.push(res.concepts[a].text);
-                                            }
-                                            console.log(k);
-                                            console.log(s);
-                                            sentiment.push(s);
-                                            keywords.push(k);
-                                            secondary.push(c);
+                                    }
+                                }, function (error, response, info) {
+                                    if (!error && response.statusCode === 200) {
+                                        bibliography.push(JSON.parse(info.data));
 
-                                            textapi.summarize({
-                                                url: body.data.fulltextUrls[0],
-                                                sentences_number: 1
-                                            }, function(error, res) {
-                                                console.log("Almost done!");
-                                                if (error === null) {
-                                                    summaries.push(res.sentences[0]);
-                                                    --ajaxCallsRemaining;
-                                                    if (ajaxCallsRemaining <= 0) {
-                                                        response.send([titles,url, keywords, summaries,secondary,sentiment, bibliography]);
-                                                    }
+                                        var parameters = {
+                                            'text': entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:description'],
+                                            'features': {
+                                                'sentiment': {
+                                                    'limit': 5
+                                                },
+                                                'keywords':{
+                                                    'limit': 5
+                                                },
+                                                'concepts':{
+                                                    'limit': 5
                                                 }
-                                                else{
-                                                    console.log(error);
-                                                    summaries.push(["None"]);
-                                                    --ajaxCallsRemaining;
-                                                    if (ajaxCallsRemaining <= 0) {
-                                                        response.send([titles,url, keywords, summaries,secondary,sentiment, bibliography]);
-                                                    }
+                                            }
+                                        };
+                                        natural_language_understanding.analyze(parameters, function(err, res) {
+                                            console.log("Actually doing stuff");
+                                            if (err) {
+                                                console.log('error', err);
+                                                sentiment.push(["None"]);
+                                                keywords.push(["None"]);
+                                                summaries.push(["None"]);
+                                                secondary.push(["None"]);
+                                                --ajaxCallsRemaining;
+                                                if (ajaxCallsRemaining <= 0) {
+                                                    response.send([titles,url,abstract,authors, keywords, summaries,secondary,sentiment, bibliography]);
                                                 }
-                                            });
-                                        }
-                                    });
-                                }
-                                else {
-                                    sentiment.push(["None"]);
-                                    keywords.push(["None"]);
-                                    summaries.push(["None"]);
-                                    secondary.push(["None"]);
-                                    bibliography.push(["None"]);
-                                    if (ajaxCallsRemaining <= 0) {
-                                        response.send([titles,url, keywords, summaries,secondary,sentiment, bibliography]);
+                                            }
+                                            else{
+                                                var s = [];
+                                                var k = [];
+                                                var c = [];
+                                                for(a = 0; a<res.keywords.length;a++){
+                                                    k.push(res.keywords[a].text);
+                                                }
+                                                s.push(res.sentiment.document.label);
+                                                for(a = 0; a<res.concepts.length;a++){
+                                                    c.push(res.concepts[a].text);
+                                                }
+                                                console.log(k);
+                                                console.log(s);
+                                                sentiment.push(s);
+                                                keywords.push(k);
+                                                secondary.push(c);
+
+                                                textapi.summarize({
+                                                    text: entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:description'],
+                                                    sentences_number: 1
+                                                }, function(error, res) {
+                                                    console.log("Almost done!");
+                                                    if (error === null) {
+                                                        summaries.push(res.sentences[0]);
+                                                        --ajaxCallsRemaining;
+                                                        if (ajaxCallsRemaining <= 0) {
+                                                            response.send([titles,url,abstract,authors, keywords, summaries,secondary,sentiment, bibliography]);
+                                                        }
+                                                    }
+                                                    else{
+                                                        console.log(error);
+                                                        summaries.push(["None"]);
+                                                        --ajaxCallsRemaining;
+                                                        if (ajaxCallsRemaining <= 0) {
+                                                            response.send([titles,url,abstract,authors, keywords, summaries,secondary,sentiment, bibliography]);
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                        });
                                     }
-                                }
-                            });
-                        }
+                                    else {
+                                        sentiment.push(["None"]);
+                                        keywords.push(["None"]);
+                                        summaries.push(["None"]);
+                                        secondary.push(["None"]);
+                                        bibliography.push(["None"]);
+                                        --ajaxCallsRemaining;
+                                        if (ajaxCallsRemaining <= 0) {
+                                            response.send([titles,url,abstract,authors, keywords, summaries,secondary,sentiment, bibliography]);
+                                        }
+                                    }
+                                });
                     });
-                });
-            }
-            else{
-                console.log(error);
-            }
+                }
+                else{
+                    console.log(error);
+                    response.send(["None"]);
+                }
+            });
         });
     });
-});
+
+// app.post('/search', function(req, response) {
+//     req.on("data",function(chunk){
+//         var str = ''+chunk;
+//         var question = str.substring(str.indexOf("=")+1,str.length);
+//         question = question.replace(/\+/g, " ");
+//         console.log(question);
+//
+//         request("https://core.ac.uk:443/api-v2/search/"+question+"?page=1&pageSize=10&apiKey="+CORE_key,function (error, resp, body) {
+//             if (!error && resp.statusCode == 200) {
+//                 console.log("Get articles");
+//                 body = JSON.parse(body);
+//                 var articles = [];
+//                 for(a = 0; a<10; a++){
+//                     articles.push(body.data[a].id);
+//                 }
+//
+//                 var ajaxCallsRemaining = 10;
+//                 var titles = [];
+//                 var url = [];
+//                 var sentiment = [];
+//                 var keywords = [];
+//                 var summaries = [];
+//                 var secondary = [];
+//                 var bibliography = [];
+//
+//                 articles.forEach(function(articleId){
+//                     console.log("GO GO GO!");
+//                     request("https://core.ac.uk:443/api-v2/articles/get/"+articleId+"?metadata=true&fulltext=true&citations=true&urls=true&apiKey="+CORE_key, function (error, resp, body) {
+//                         if(error) {
+//                             --ajaxCallsRemaining;
+//                             titles.push(["None"]);
+//                             url.push(["None"]);
+//                             sentiment.push(["None"]);
+//                             keywords.push(["None"]);
+//                             summaries.push(["None"]);
+//                             secondary.push(["None"]);
+//                             bibliography.push(["None"]);
+//                             if (ajaxCallsRemaining <= 0) {
+//                                 response.send([titles,url, keywords, summaries,secondary,sentiment, bibliography]);
+//                             }
+//                             console.log(error);
+//                         }
+//                         if (!error && resp.statusCode == 200) {
+//                             body = JSON.parse(body);
+//                             titles.push(body.data.title);
+//                             url.push(body.data.fulltextUrls[0]);
+//
+//                             request({
+//                                 url: "https://api.citation-api.com/2.1/rest/cite",
+//                                 json: true, multipart:{
+//                                     data: {
+//                                         "key": ebib_key,
+//                                         "source": "journal",
+//                                         "style": "mla7",
+//                                         "journal": {
+//                                             "title": body.data.title
+//                                         },
+//                                         "pubtype": {
+//                                             "main": "pubjournal"
+//                                         },
+//                                         "pubjournal": {
+//                                             "title": body.data.publisher,
+//                                             "year": body.data.year
+//                                         },
+//                                         "contributors": [{
+//                                             "function": "author",
+//                                             "first": body.data.authors.substring(0, body.data.authors.firstIndexOf(",")),
+//                                             "middle": body.data.authors.sustring(body.data.authors.substring(body.data.authors.firstIndexOf(",")+1).firstIndexOf(" ")),
+//                                             "last": body.data.authors.substring(body.data.authors.firstIndexOf(",")+1, body.data.authors.substring(body.data.authors.firstIndexOf(",")+1).firstIndexOf(" "))
+//                                         }
+//                                         ]
+//                                     }
+//                                 }
+//                             }, function (error, response, info) {
+//                                 if (!error && response.statusCode === 200) {
+//                                     bibliography.push(JSON.parse(info.data));
+//                                     var parameters = {
+//                                         'url': body.data.fulltextUrls[0],
+//                                         'features': {
+//                                             'sentiment': {
+//                                                 'limit': 5
+//                                             },
+//                                             'keywords':{
+//                                                 'limit': 5
+//                                             },
+//                                             'concepts':{
+//                                                 'limit': 5
+//                                             }
+//                                         }
+//                                     };
+//                                     natural_language_understanding.analyze(parameters, function(err, res) {
+//                                         console.log("Actually doing stuff");
+//                                         if (err) {
+//                                             console.log('error', err);
+//                                             sentiment.push(["None"]);
+//                                             keywords.push(["None"]);
+//                                             summaries.push(["None"]);
+//                                             secondary.push(["None"]);
+//                                             --ajaxCallsRemaining;
+//                                             if (ajaxCallsRemaining <= 0) {
+//                                                 response.send([titles,url, keywords, summaries,secondary,sentiment, bibliography]);
+//                                             }
+//                                         }
+//                                         else{
+//                                             var s = [];
+//                                             var k = [];
+//                                             var c = [];
+//                                             for(a = 0; a<res.keywords.length;a++){
+//                                                 k.push(res.keywords[a].text);
+//                                             }
+//                                             s.push(res.sentiment.document.label);
+//                                             for(a = 0; a<res.concepts.length;a++){
+//                                                 c.push(res.concepts[a].text);
+//                                             }
+//                                             console.log(k);
+//                                             console.log(s);
+//                                             sentiment.push(s);
+//                                             keywords.push(k);
+//                                             secondary.push(c);
+//
+//                                             textapi.summarize({
+//                                                 url: body.data.fulltextUrls[0],
+//                                                 sentences_number: 1
+//                                             }, function(error, res) {
+//                                                 console.log("Almost done!");
+//                                                 if (error === null) {
+//                                                     summaries.push(res.sentences[0]);
+//                                                     --ajaxCallsRemaining;
+//                                                     if (ajaxCallsRemaining <= 0) {
+//                                                         response.send([titles,url, keywords, summaries,secondary,sentiment, bibliography]);
+//                                                     }
+//                                                 }
+//                                                 else{
+//                                                     console.log(error);
+//                                                     summaries.push(["None"]);
+//                                                     --ajaxCallsRemaining;
+//                                                     if (ajaxCallsRemaining <= 0) {
+//                                                         response.send([titles,url, keywords, summaries,secondary,sentiment, bibliography]);
+//                                                     }
+//                                                 }
+//                                             });
+//                                         }
+//                                     });
+//                                 }
+//                                 else {
+//                                     sentiment.push(["None"]);
+//                                     keywords.push(["None"]);
+//                                     summaries.push(["None"]);
+//                                     secondary.push(["None"]);
+//                                     bibliography.push(["None"]);
+//                                     if (ajaxCallsRemaining <= 0) {
+//                                         response.send([titles,url, keywords, summaries,secondary,sentiment, bibliography]);
+//                                     }
+//                                 }
+//                             });
+//                         }
+//                     });
+//                 });
+//             }
+//             else{
+//                 console.log(error);
+//             }
+//         });
+//     });
+// });
 
 
 

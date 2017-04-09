@@ -62,9 +62,10 @@ $(document).ready(function(){
     $(".list-keyword").click(function(){
         $(".list-keyword").removeClass("list-keyword-selected");
         $(this).addClass("list-keyword-selected");
-        highlightKeyword($(this).text());
+        $('.article-text').highlight($(this).text());    
     });
 });
+
 function highlightKeyword(word){
     var text = $(".article-text").text();
     console.log(word);
