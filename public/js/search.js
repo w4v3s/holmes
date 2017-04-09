@@ -12,7 +12,7 @@ $(document).ready(function(){
     $(".title-container").animate({
         top: "-=25vh",
         opacity:1.0
-    }, 100, function() {
+    }, 1000, function() {
         $(".title-logo").fadeIn("slow");
         $(".search-container").fadeIn("slow");
     });
@@ -77,7 +77,7 @@ function startLoading(){
             wait.innerHTML = ".";
         else
             wait.innerHTML += ".";
-    }, 1000);
+    }, 100);
     $(".loading-view").fadeIn("slow");
 }
 function stopLoading(){
@@ -201,7 +201,7 @@ function appendArticleList(){
             list+="<\/div><div class=\"reliability\" id =\"A"+percen+"\">No Data";
         }
         else {
-            list += "<\/div><div class=\"reliability\" id =\"A" + percen + "\">Reliability";
+            list += "<\/div><div class=\"reliability\" id =\"A" + percen + "\">Reliability: ";
         }
 
         list+="</div></div>";

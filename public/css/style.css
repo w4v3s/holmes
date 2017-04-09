@@ -17,7 +17,6 @@ body{
 }
 .main-container {
     display: table;
-    height: inherit;
     width: 100%;
 }
 h2,h3,h4,h5{
@@ -58,14 +57,14 @@ h2,h3,h4,h5{
 }
 .title-container{
     position: absolute;
-    top:45vh;
+    top:50vh;
     text-align: center;
     width: 100vw;
     opacity: 0;
 
 }
 .title-logo{
-    top:47vh;
+    top:41vh;
 }
 .title{
     text-align: center;
@@ -113,7 +112,8 @@ h2,h3,h4,h5{
     border: rgba(0,0,0,0.8) 2px solid;
 }
 
-.highlight { background-color: rgba(0, 100, 163, 0.6)}
+/*.highlight { background-color: rgba(0, 100, 163, 0.6)}*/
+.highlight{ background-color: rgba(255, 202, 130,0.5)}
 
 /*Articles*/
 .article-view{
@@ -213,7 +213,7 @@ h2,h3,h4,h5{
     width: 11vw;
 }
 #bibliography{
-    padding: 5px;
+    padding: 20px;
 }
 
 /*Toolbar Keywords*/
@@ -253,6 +253,7 @@ h2,h3,h4,h5{
     min-width: 90%;
     min-height: 90%;
     color:white;
+    font-weight: bold;
 }
 
 /*Scrollbar*/
@@ -290,14 +291,18 @@ h2,h3,h4,h5{
     height:inherit;
 }
 
+#notes-panel{
+    padding: 15px;
+}
+
 /* Loading */
 .loading-view{
     position: absolute;
     width: 100vw;
-    height: 100vh;
+    top:0px;
 }
 #wait{
-    font-size: 200px;
+    font-size: 150px;
     color:rgba(0,0,0,.3);
 }
 .reliability {
