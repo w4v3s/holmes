@@ -127,18 +127,18 @@ function appendSecondary(obj){
     {
         $("<h2/>", {
             id: 'keyword_'+i,
-            html: obj[2][i],
+            html: obj[6][i],
             class:"secondary-question"
         }).appendTo($("secondary-container"));
     }  
 }
 function appendKeywords(obj){
     
-    for(var i=0;i<obj[2].length;i++)
+    for(var i=0;i<obj[3].length;i++)
     {
         $("<div/>", {
             id: 'keyword_'+i,
-            html: '<h4 class="list-keyword">'+obj[2][i]+'</h4>',
+            html: '<h4 class="list-keyword">'+obj[4][i]+'</h4>',
             class:"article"
         }).appendTo($("keyword-list"));
     }
@@ -148,9 +148,40 @@ function appendArticleList(obj){
     {
         $("<div/>", {
             id: 'article-entry_'+i,
-            html: "<h3 class='article-list-elements article-name'>"+obj[0][i]+"</h3> <h4 class='article-list-elements article-desc'>"+obj[3][i]+"</h4>",
+            html: "<h3 class='article-list-elements article-name'>"+obj[0][i]+"</h3> <h4 class='article-list-elements article-desc'>"+obj[5][i]+"</h4>",
             class:"article"
         }).appendTo($("#article-list-container"));
+        $("<div/>", {
+            id: 'mini-keyword_'+i,
+            class:"article-list-elements article-keywords"
+        }).appendTo($("#article-entry"+i));
+        if("None"==obj[4][0])
+        {
+            console.log("got nothing");
+        }
+        if(obj[4].length<2)
+        {
+            $("<h4/>", {
+                html:obj[4][0],
+                class:"mini-keyword"
+            }).appendTo($('mini-keyword_'+i));
+        }
+        else
+        {
+            $("<h4/>", {
+                html:obj[4][0],
+                class:"mini-keyword"
+            }).appendTo($('mini-keyword_'+i));
+
+            $("<h4/>", {
+                html:obj[4][1],
+                class:"mini-keyword"
+            }).appendTo($('mini-keyword_'+i));
+        }
+        $("<div/>", {
+            id: 'bias_'+i,
+            class:"reliability"
+        }).appendTo($("#article-entry"+i));
     }
 
 }
@@ -158,7 +189,7 @@ function appendArticle(obj){
 
     $("<div/>", {
         id: 'article_'+i,
-        html: "<h3 class='article-list-elements article-name'>"+obj[0][i]+"</h3> <h4 class='article-list-elements article-desc'>"+obj[3][i]+"</h4> <p class='article-text'></p>",
+        html: "<h2 class='article-list-elements article-title article-heading'>"+obj[0][i]+"</h2> <h2 class='article-list-elements article-author article-heading'>"+obj[3][i]+"</h2> <p class='article-text'>"+obj[2][i]+"</p>",
         class:"article-field article-content"
     }).appendTo($("#article-container"));
     
