@@ -38,11 +38,16 @@ var AYLIENTextAPI = require('aylien_textapi');
 //     "username": "4d79f25d-d96b-491b-9731-3b5057567494",
 //     "password": "BfWJHGKW2SB0"
 // };
-var bluemix={
+// var bluemix={
+//     "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
+//     "username": "83ddf1e4-dad6-402d-8c5c-253e3334fb14",
+//     "password": "6zk2KRikou1u"
+// };
+var bluemix= {
     "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
-    "username": "83ddf1e4-dad6-402d-8c5c-253e3334fb14",
-    "password": "6zk2KRikou1u"
-};
+    "username": "94aa19db-9f54-4a7d-b1f3-3cbf35505b7d",
+    "password": "AwiBQax2Ai0R"
+}
 // var aylien_key = "bd308ed5f3710b40d6e280fafd4d222e";
 // var aylien_app_id = "5ceffad9";
 var aylien_key = "c49162c07d76aef113d427c8bf7b5beb";
