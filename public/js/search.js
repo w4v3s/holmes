@@ -67,6 +67,7 @@ $(document).ready(function(){
 
     setupKeywordClick();
     highlight();
+    notepadMemory();
 
 });
 function setupKeywordClick(){
@@ -198,16 +199,22 @@ function displayArticleView(){
 function appendBiblio(index){
     $("<h4 class=\"citation\">"+obj[index].bibliography+"<\/h4>").appendTo("#bibliography");
 }
-function updateNotepad(index){
+function notepadMemory(){
     array=[];
     for(var i=0; i<obj.length();i++)
     {
         array.push("");
     }
-    
+}
+function updateNotepad(index){
+
+    $("#notes").innerHTML=array(index);
+}
+function storeNotes(index){
+    array(index)=$("#notes");
 }
 function appendNotepad(){
-
+   
 }
 
 function openArticle(index){
