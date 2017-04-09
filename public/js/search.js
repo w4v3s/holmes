@@ -105,6 +105,64 @@ function searchValues(){
     getData(searchTerm,true);
     displayArticleView();
 }
+function getData(term,reset){
+    $.ajax({
+        type: "POST",
+        url: "/search",
+        data: {question:term},
+        success: function(result){
+            var obj = result;
+            console.log(obj);
+            // setUpArticles(val,reset);
+            // setUpSecondary(val,reset);
+        },
+        error:function(error){
+            console.log(error);
+            alert("Error! Please reload!");
+        }
+    });
+}
+function appendSecondary(obj){
+      for(var i=0;i<obj[2].length;i++)
+    {
+        $("<h2/>", {
+            id: 'keyword_'+i,
+            html: obj[2][i],
+            class:"secondary-question"
+        }).appendTo($("secondary-container"));
+    }  
+}
+function appendKeywords(obj){
+    
+    for(var i=0;i<obj[2].length;i++)
+    {
+        $("<div/>", {
+            id: 'keyword_'+i,
+            html: '<h4 class="list-keyword">'+obj[2][i]+'</h4>',
+            class:"article"
+        }).appendTo($("keyword-list"));
+    }
+}
+function appendArticleList(obj){
+    for(var i=0;i<5;i++)
+    {
+        $("<div/>", {
+            id: 'article-entry_'+i,
+            html: "<h3 class='article-list-elements article-name'>"+obj[0][i]+"</h3> <h4 class='article-list-elements article-desc'>"+obj[3][i]+"</h4>",
+            class:"article"
+        }).appendTo($("#article-list-container"));
+    }
+
+}
+function appendArticle(obj){
+
+    $("<div/>", {
+        id: 'article_'+i,
+        html: "<h3 class='article-list-elements article-name'>"+obj[0][i]+"</h3> <h4 class='article-list-elements article-desc'>"+obj[3][i]+"</h4> <p class='article-text'></p>",
+        class:"article-field article-content"
+    }).appendTo($("#article-container"));
+    
+}
 function setUpSecondary(val, reset){
     if(reset){
         $(".secondary-container").clear();
@@ -131,25 +189,8 @@ function setUpArticles(val, reset){
         $(".secondary-container").clear();
     }
     else if(secondaries.length<5){
-        $(".secondary-container").append($("<div class='secondary-question'>"+val+"<\/div>"));
+        $(".secondary-container").append($("<div class='secondary-question'>"+val+"</div>"));
     }
-}
-function getData(term,reset){
-    $.ajax({
-        type: "POST",
-        url: "/search",
-        data: {question:term},
-        success: function(result){
-            var obj = result;
-            console.log(obj);
-            // setUpArticles(val,reset);
-            // setUpSecondary(val,reset);
-        },
-        error:function(error){
-            console.log(error);
-            alert("Error! Please reload!");
-        }
-    });
 }
 function displayArticleView(){
     $(".article-view").fadeIn("slow");
