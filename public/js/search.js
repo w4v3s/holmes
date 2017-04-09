@@ -198,7 +198,7 @@ function appendArticleList(){
         var percen = parseInt(Math.abs(obj[i].sentiment*100));
         console.log(percen);
         if(percen < 1){
-            list+="<\/div><div class=\"reliability\" id =\"A"+percen+"\">No Data";
+            list+="<\/div><div class=\"reliability\" id =\"A"+percen+"\">Not Enough Data to Determine Reliability";
         }
         else {
             list += "<\/div><div class=\"reliability\" id =\"A" + percen + "\">Reliability: ";
@@ -220,7 +220,7 @@ function appendArticleList(){
             fill: 'rgba(255, 255, 255, 0.1)',
             trailColor: '#eee',
             trailWidth: 1,
-            svgStyle: {width: percen+"%", height: '100%'}
+            svgStyle: {width: (percen/2)+"%", height: '100%'}
         });
 
         bar.animate(1.0);
