@@ -224,19 +224,34 @@ function xmlToJson(xml) {
         }
     }
     return obj;
-};
+}
 
 app.post('/fetch', function(req, response) {
     req.on("data",function(chunk){
-        console.log("diffbot");
+        // console.log("diffbot");
+        // var str = ''+chunk;
+        // var article = str.substring(str.indexOf("=")+1,str.length);
+        //
+        // request("https://api.diffbot.com/v3/article?token="+DIFF_key+"&url="+article,function (error, resp, body) {
+        //     if (!error && resp.statusCode == 200) {
+        //         console.log("diffbot");
+        //         var body = JSON.parse(body);
+        //         response.send(body);
+        //     }
+        // });
         var str = ''+chunk;
-        var article = str.substring(str.indexOf("=")+1,str.length);
-
-        request("https://api.diffbot.com/v3/article?token="+DIFF_key+"&url="+article,function (error, resp, body) {
-            if (!error && resp.statusCode == 200) {
-                console.log("diffbot");
-                var body = JSON.parse(body);
-                response.send(body);
+        var title = str.substring(str.indexOf("=")+1,str.length);
+        var article = str.substring(str.lastIndexOf("=")+1,str.length);
+        textapi.summarize({
+            text: article,
+            title: title,
+            sentences_number: 4
+        }, function(error, res) {
+            if (error === null) {
+                response.send(res.sentences);
+            }
+            else{
+                response.send(["Error"]);
             }
         });
 
@@ -267,7 +282,7 @@ app.post('/fetch', function(req, response) {
                     var sentiment = [];
                     var bibliography = [];
 
-                    if(body.feed.entry.length<=0){
+                    if(body.feed.entry[0]==null){
                         response.send([titles,url,abstract,authors, keywords, summaries,secondary,sentiment, bibliography]);
                     }
                     for(a = 0; a<10; a++){
@@ -277,8 +292,6 @@ app.post('/fetch', function(req, response) {
                         abstract.push(body.feed.entry[a]['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:description']);
                         authors.push(body.feed.entry[a]['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator']);
                     }
-
-                    response.send([titles,url,abstract,authors, keywords, summaries,secondary,sentiment, bibliography]);
 
                     entries.forEach(function(entry){
                         console.log("GO GO GO!");
@@ -294,10 +307,14 @@ app.post('/fetch', function(req, response) {
                                         });
                                     }
                                 }
+                                else{
+                                    autho.push({});
+                                }
+
                                 request({
                                     url: "https://api.citation-api.com/2.1/rest/cite",
-                                    json: true, multipart:{
-                                        data: {
+                                    method:"POST",
+                                    json: {
                                             "key": ebib_key,
                                             "source": "journal",
                                             "style": "mla7",
@@ -311,12 +328,12 @@ app.post('/fetch', function(req, response) {
                                                 "title": entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:publisher'],
                                                 "year": entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['prism:publicationDate'].substring(0,4)
                                             },
-                                            "contributors":autho
-                                        }
+                                            "contributors":[{}]
                                     }
-                                }, function (error, response, info) {
-                                    if (!error && response.statusCode === 200) {
-                                        bibliography.push(JSON.parse(info.data));
+                                }, function (error, res, info) {
+                                    if (!error && res.statusCode === 200) {
+                                        console.log(info);
+                                        bibliography.push(info.data);
 
                                         var parameters = {
                                             'text': entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:description'],
@@ -328,7 +345,7 @@ app.post('/fetch', function(req, response) {
                                                     'limit': 5
                                                 },
                                                 'concepts':{
-                                                    'limit': 5
+                                                    'limit': 3
                                                 }
                                             }
                                         };
@@ -364,6 +381,7 @@ app.post('/fetch', function(req, response) {
 
                                                 textapi.summarize({
                                                     text: entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:description'],
+                                                    title: entry.title,
                                                     sentences_number: 1
                                                 }, function(error, res) {
                                                     console.log("Almost done!");
