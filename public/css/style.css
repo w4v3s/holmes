@@ -93,7 +93,6 @@ h2,h3,h4,h5{
 .secondary-container{
     position: absolute;
     margin-top: 110px;
-    overflow: auto;
     text-align: center;
     width: 100vw;
 }
@@ -117,7 +116,7 @@ h2,h3,h4,h5{
 .article-view{
     position:absolute;
     top: 200px;
-    height: 70vh;
+    height: 65vh;
     width: inherit;
 }
 .article-field{
