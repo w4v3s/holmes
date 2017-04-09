@@ -188,11 +188,13 @@ var textapi = new AYLIENTextAPI({
 
 app.post('/fetch', function(req, response) {
     req.on("data",function(chunk){
+        console.log("diffbot");
         var str = ''+chunk;
         var article = str.substring(str.indexOf("=")+1,str.length);
 
         request("https://api.diffbot.com/v3/article?token="+DIFF_key+"&url="+article,function (error, resp, body) {
             if (!error && resp.statusCode == 200) {
+                console.log("diffbot");
                 var body = JSON.parse(body);
                 response.send(body);
             }
