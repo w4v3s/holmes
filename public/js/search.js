@@ -103,7 +103,7 @@ function searchValues(){
     console.log("Searching...");
     var searchTerm = $("#search-bar").val();
     displayArticleView();
-    // getData(searchTerm,true);
+    getData(searchTerm,true);
 }
 function setUpSecondary(val, reset){
     if(reset){
@@ -123,7 +123,7 @@ function setUpSecondary(val, reset){
     $(".secondary-question").click(function(){
         var searchTerm = $(this).text();
         $("#search-bar").val(searchTerm);
-        //getData(searchTerm,false);
+        getData(searchTerm,false);
     });
 }
 function setUpArticles(val, reset){
