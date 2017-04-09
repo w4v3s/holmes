@@ -7,6 +7,7 @@ var secondaries = [];
 var obj;
 var array;
 var dots;
+var noteindex;
 $(document).ready(function(){
     $(".title-container").animate({
         top: "-=25vh",
@@ -22,8 +23,8 @@ $(document).ready(function(){
             searchBarMove();
             searchValues();
         }
+    
     });
-
     $("#keywords").click(function () {
         $("#notes-panel").hide();
         $("#bibliography").hide();
@@ -64,6 +65,7 @@ $(document).ready(function(){
 
 
     setupKeywordClick();
+
     //highlight();
     //notepadMemory();
 
@@ -89,19 +91,6 @@ function setupKeywordClick(){
         $('.article-content p').removeHighlight();
         $('.article-content p').highlight($(this).text());
     });
-}
-function highlight(){
-    // var $input = $form.find("input[name='keyword']");
-    $(".list-keyword").click(function(){
-        // Determine search term
-        var searchTerm = $(this).val();
-
-        // Remove old highlights and highlight
-        // new search term afterwards
-            $("p").removeHighlight();
-            $("p").highlight(searchTerm);
-
-        });
 }
 function setupSecondaryClick(){
     $(".secondary-question").click(function(){
@@ -155,6 +144,7 @@ function getData(term){
             stopLoading();
             appendArticleList(obj);
             displayArticleView();
+            notepadMemory();
         },
         error:function(error){
             console.log(error);
@@ -166,7 +156,9 @@ function resetInfo(){
     $(".secondary-container").empty();
     $("#article-list-container").empty();
     $(".article-content").empty();
-    $(".toolbar").empty();
+    $("#bibliography").empty();
+    $("#keyword-list").empty();
+
 }
 function appendSecondary(index){
     for(var i=0;i<obj[index].concepts.length;i++)
@@ -243,20 +235,29 @@ function appendBiblio(index){
 }
 function notepadMemory(){
     array=[];
-    for(var i=0; i<obj.length();i++)
+    for(var i=0; i<obj.length;i++)
     {
         array.push("");
     }
 }
 function updateNotepad(index){
-
-    $("#notes").innerHTML=array(index);
+    if(isOverflowed($("#pad")))
+    {
+        $("#pad").css({
+            overflow: 'auto'
+        });
+    }
+    console.log(array);
+    $("#pad").val(array[index]);
 }
 function storeNotes(index){
-    array(index)=$("#notes");
+    array[index]= $("#pad").val();   
 }
-function appendNotepad(){
-   
+function initNotes(index){
+    $("#pad").off();
+    $("#pad").keyup(function(){
+        storeNotes(index);
+    })
 }
 
 function openArticle(index){
@@ -264,6 +265,7 @@ function openArticle(index){
     $("#keyword-list").empty();
     $(".secondary-container").empty();
     $("#bibliography").empty();
+    initNotes(index);
 
     var list = "";
     list+="<h2 class=\"article-list-elements article-title article-heading\">"+obj[index].title+"<\/h2>";
@@ -285,4 +287,8 @@ function openArticle(index){
     appendKeywords(index);
     appendSecondary(index);
     appendBiblio(index);
+    updateNotepad(index);
 }
+function isOverflowed(element){
+    return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
+}   

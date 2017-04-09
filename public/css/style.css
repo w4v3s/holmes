@@ -300,8 +300,16 @@ h2,h3,h4,h5{
     font-size: 200px;
     color:rgba(0,0,0,.3);
 }
-.reliability{
+.reliability {
     margin: 20px;
     width: 400px;
     height: 8px;
+}
+#pad{
+    width: 12vw;
+    height:50vh;
+    display:relative;
+    background-color: inherit;
+    border-style: none;
+    outline:0;
 }
