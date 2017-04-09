@@ -64,7 +64,7 @@ h2,h3,h4,h5{
 
 }
 .title-logo{
-    top:41vh;
+    top:35vh;
 }
 .title{
     text-align: center;
@@ -80,7 +80,7 @@ h2,h3,h4,h5{
     font-size: 30px;
     padding:45px;
     border-radius: 50px;
-    background: rgba(0,0,0,0.1);
+    background: rgba(0,0,0,0.3);
     color:white;
     border:none;
     width: 60vw;
@@ -210,7 +210,7 @@ h2,h3,h4,h5{
 }
 .toolbar{
     padding: 5px;
-    width: 11vw;
+    width: 13xvw;
 }
 #bibliography{
     padding: 20px;
@@ -307,13 +307,12 @@ h2,h3,h4,h5{
 }
 .reliability {
     margin: 20px;
-    width: 400px;
     height: 8px;
 }
 #pad{
     width: 12vw;
-    height:50vh;
-    display:relative;
+    height:47vh;
+    overflow:auto;
     background-color: inherit;
     border-style: none;
     outline:0;

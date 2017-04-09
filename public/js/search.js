@@ -195,13 +195,13 @@ function appendArticleList(){
                 list+="<h4 class=\"mini-keyword\">"+obj[i].keywords[a]+"</h4>";
             }
         }
-        var percen = parseInt(Math.abs(obj[i].sentiment*100));
+        var percen = parseInt(Math.abs( (obj[i].sentiment)*100));
         console.log(percen);
         if(percen < 1){
-            list+="<\/div><div class=\"reliability\" id =\"A"+percen+"\">No Data";
+            list+="<\/div><div class=\"reliability\" id =\"A"+percen+"\">Can't Determine Reliability";
         }
         else {
-            list += "<\/div><div class=\"reliability\" id =\"A" + percen + "\">Reliability: ";
+            list += "<\/div><div class=\"reliability\" id =\"A" + percen + "\">Bias: ";
         }
 
         list+="</div></div>";
@@ -211,7 +211,7 @@ function appendArticleList(){
     $("<div class='main-container'><div class='main-content'><h3 class=\"intro\">click on an article to proceed<\/h3></div></div>").appendTo(".article-content");
 
     for(c = 0; c<obj.length;c++){
-        var percen = parseInt(Math.abs(obj[c].sentiment*100));
+        var percen = parseInt(Math.abs((obj[c].sentiment)*100));
         var bar = new ProgressBar.Line("#A"+percen, {
             strokeWidth: 4,
             easing: 'easeInOut',
@@ -220,7 +220,7 @@ function appendArticleList(){
             fill: 'rgba(255, 255, 255, 0.1)',
             trailColor: '#eee',
             trailWidth: 1,
-            svgStyle: {width: percen+"%", height: '100%'}
+            svgStyle: {width: (percen/2)+"%", height: '100%'}
         });
 
         bar.animate(1.0);
