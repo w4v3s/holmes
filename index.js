@@ -30,8 +30,8 @@ var AYLIENTextAPI = require('aylien_textapi');
 // }
 var bluemix = {
   "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
-  "username": "ef867255-921e-43ad-aa39-cf5def58a21e",
-  "password": "NWT4zDKV1T3Z"
+  "username": "4d79f25d-d96b-491b-9731-3b5057567494",
+  "password": "BfWJHGKW2SB0"
 }
 var aylien_key = "bd308ed5f3710b40d6e280fafd4d222e";
 var aylien_app_id = "5ceffad9";

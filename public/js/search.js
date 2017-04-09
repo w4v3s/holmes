@@ -6,6 +6,7 @@ var searchPage = false;
 var secondaries = [];
 var obj;
 var array;
+var noteindex;
 $(document).ready(function(){
     var a = "I ate a chicken";
     a = a.replace("ate","<b>chicken<\b>");
@@ -24,8 +25,8 @@ $(document).ready(function(){
         {
             searchValues();
         }
+    
     });
-
     $("#keywords").click(function () {
         $("#notes-panel").hide();
         $("#bibliography").hide();
@@ -67,7 +68,7 @@ $(document).ready(function(){
 
     setupKeywordClick();
     highlight();
-    notepadMemory();
+    
 
 });
 function setupKeywordClick(){
@@ -140,6 +141,7 @@ function getData(term){
             resetInfo();
             appendArticleList(obj);
             displayArticleView();
+            notepadMemory();
         },
         error:function(error){
             console.log(error);
@@ -151,7 +153,9 @@ function resetInfo(){
     $(".secondary-container").empty();
     $("#article-list-container").empty();
     $(".article-content").empty();
-    $(".toolbar").empty();
+    $("#bibliography").empty();
+    $("#keyword-list").empty();
+
 }
 function appendSecondary(index){
     for(var i=0;i<obj[index].concepts.length;i++)
@@ -191,6 +195,7 @@ function appendArticleList(){
         list+="<\/div><div class=\"reliability\"></div></div>";
     }
     $(list).appendTo("#article-list-container");
+    
 }
 function displayArticleView(){
     $(".article-view").fadeIn("slow");
@@ -201,20 +206,29 @@ function appendBiblio(index){
 }
 function notepadMemory(){
     array=[];
-    for(var i=0; i<obj.length();i++)
+    for(var i=0; i<obj.length;i++)
     {
         array.push("");
     }
 }
 function updateNotepad(index){
-
-    $("#notes").innerHTML=array(index);
+    if(isOverflowed($("#pad")))
+    {
+        $("#pad").css({
+            overflow: 'auto'
+        });
+    }
+    console.log(array);
+    $("#pad").val(array[index]);
 }
 function storeNotes(index){
-    array(index)=$("#notes");
+    array[index]= $("#pad").val();   
 }
-function appendNotepad(){
-   
+function initNotes(index){
+    $("#pad").off();
+    $("#pad").keyup(function(){
+        storeNotes(index);
+    })
 }
 
 function openArticle(index){
@@ -222,6 +236,7 @@ function openArticle(index){
     $("#keyword-list").empty();
     $(".secondary-container").empty();
     $("#bibliography").empty();
+    initNotes(index);
 
     var list = "";
     list+="<h2 class=\"article-list-elements article-title article-heading\">"+obj[index].title+"<\/h2>";
@@ -243,4 +258,8 @@ function openArticle(index){
     appendKeywords(index);
     appendSecondary(index);
     appendBiblio(index);
+    updateNotepad(index);
 }
+function isOverflowed(element){
+    return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
+}   
