@@ -43,10 +43,15 @@ var AYLIENTextAPI = require('aylien_textapi');
 //     "username": "83ddf1e4-dad6-402d-8c5c-253e3334fb14",
 //     "password": "6zk2KRikou1u"
 // };
-var bluemix= {
-    "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
-    "username": "94aa19db-9f54-4a7d-b1f3-3cbf35505b7d",
-    "password": "AwiBQax2Ai0R"
+// var bluemix= {
+//     "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
+//     "username": "94aa19db-9f54-4a7d-b1f3-3cbf35505b7d",
+//     "password": "AwiBQax2Ai0R"
+// }
+var bluemix = {
+  "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
+  "username": "b9a28510-fe8e-4605-bc1e-ee8434cec916",
+  "password": "VknWNQ3dtRnJ"
 }
 // var aylien_key = "bd308ed5f3710b40d6e280fafd4d222e";
 // var aylien_app_id = "5ceffad9";
