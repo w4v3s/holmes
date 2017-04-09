@@ -4,7 +4,8 @@
 //Globals
 var searchPage = false;
 var secondaries = [];
-
+var obj;
+var array;
 $(document).ready(function(){
     var a = "I ate a chicken";
     a = a.replace("ate","<b>chicken<\b>");
@@ -57,23 +58,44 @@ $(document).ready(function(){
         $(".toolbar-container").removeClass("keywords-selected");
         $(".toolbar-container").removeClass("citation-selected");
         $(".toolbar-container").addClass("notes-selected");
+        $(".list-keyword").click(function (){
+            $(".list-keyword").removeClass("list-keyword-selected");
+            $(this).addClass("lkselected");
+        })
     });
 
+
+    setupKeywordClick();
+    highlight();
+
+});
+function setupKeywordClick(){
     $(".list-keyword").click(function(){
         $(".list-keyword").removeClass("list-keyword-selected");
         $(this).addClass("list-keyword-selected");
-        $('.article-text').removeHighlight();  
-        $('.article-text').highlight($(this).text());   
+        //$('.article-text').removeHighlight();  
+        $('.article-text').highlight($(this).text());  
     });
-});
+}
+function highlight(){
+    // var $input = $form.find("input[name='keyword']");
+    $(".list-keyword").click(function(){
+        // Determine search term
+        var searchTerm = $(this).val();
 
-function highlightKeyword(word){
-    var text = $(".article-text").text();
-    console.log(word);
-    console.log("1"+text);
-    text = text.replace('/word/ig', "<b>"+word+"</b>");
-    console.log("2"+text);
-    $(".article-text").text(text);
+        // Remove old highlights and highlight
+        // new search term afterwards
+            $("p").removeHighlight();
+            $("p").highlight(searchTerm);
+
+        });
+}
+function setupSecondaryClick(){
+    $(".secondary-question").click(function(){
+        var searchTerm = $(this).text();
+        $("#search-bar").val(searchTerm);
+        getData(searchTerm);
+    })
 }
 function searchBarMove(){
     if (!searchPage){
@@ -104,19 +126,19 @@ function searchBarMove(){
 function searchValues(){
     console.log("Searching...");
     var searchTerm = $("#search-bar").val();
-    // getData(searchTerm,true);
-    displayArticleView();
+    getData(searchTerm);
 }
-function getData(term,reset){
+function getData(term){
     $.ajax({
         type: "POST",
         url: "/search",
         data: {question:term},
         success: function(result){
-            var obj = result;
+            obj = result;
             console.log(obj);
-            // setUpArticles(val,reset);
-            // setUpSecondary(val,reset);
+            resetInfo();
+            appendArticleList(obj);
+            displayArticleView();
         },
         error:function(error){
             console.log(error);
@@ -124,118 +146,94 @@ function getData(term,reset){
         }
     });
 }
-function appendSecondary(obj){
-    for(var i=0;i<obj[2].length;i++)
+function resetInfo(){
+    $(".secondary-container").empty();
+    $("#article-list-container").empty();
+    $(".article-content").empty();
+    $(".toolbar").empty();
+}
+function appendSecondary(index){
+    for(var i=0;i<obj[index].concepts.length;i++)
     {
         $("<h2/>", {
             id: 'tags_'+i,
-            html: obj[6][i],
-            class:"secondary-question",
-            style: "display:none"
-        }).appendTo($("secondary-container"));
-
-        $("#tags_"+i).fadeIn("medium");
-    }  
+            html: obj[index].concepts[i],
+            class:"secondary-question"
+        }).appendTo(".secondary-container");
+    }
+    setupSecondaryClick();
 }
-function appendKeywords(obj){
-    
-    for(var i=0;i<obj[3].length;i++)
+function appendKeywords(index){
+    var list = "";
+    for(i=0;i<obj[index].keywords.length;i++)
     {
-        $("<div/>", {
-            id: 'keyword_'+i,
-            html: '<h4 class="list-keyword">'+obj[4][i]+'</h4>',
-            class:"article",
-            style: "display:none"
-        }).appendTo($("keyword-list"));
-
-        $("#keyword_"+i).fadeIn("medium");
+        list+="<h4 class=\"list-keyword\" >"+obj[index].keywords[i]+"<\/h4>";
     }
+    $(list).appendTo("#keyword-list");
+    setupKeywordClick();
 }
-function appendArticleList(obj){
-    for(var i=0;i<5;i++)
-    {
-        $("<div/>", {
-            id: 'article-entry_'+i,
-            html: "<h3 class='article-list-elements article-name'>"+obj[0][i]+"</h3> <h4 class='article-list-elements article-desc'>"+obj[5][i]+"</h4>",
-            class:"article",
-            style: "display:none"
-        }).appendTo($("#article-list-container"));
-        $("<div/>", {
-            id: 'mini-keyword_'+i,
-            class:"article-list-elements article-keywords"
-        }).appendTo($("#article-entry"+i));
-        if("None"==obj[4][0])
+function appendArticleList(){
+    // 0457
+
+    var list = "";
+    for(i=0;i<obj.length;i++){
+        list+="<div class=\"article\" onclick=\"openArticle("+i+")\"><h3 class=\"article-list-elements article-name\">" + obj[i].title + "<\/h3>";
+        if(obj[i].summary!=null)
+            list+="<h4 class=\"article-list-elements article-desc\">" + obj[i].summary + "<\/h4>";
+        list+="<div class=\"article-list-elements article-keywords\">";
+        if(obj[i].keywords != null && obj[i].keywords.length>1)
         {
-            console.log("got nothing");
+            for(a = 0; a<2;a++){
+                list+="<h4 class=\"mini-keyword\">"+obj[i].keywords[a]+"</h4>";
+            }
         }
-        if(obj[4].length<2)
-        {
-            $("<h4/>", {
-                html:obj[4][0],
-                class:"mini-keyword"
-            }).appendTo($('mini-keyword_'+i));
-        }
-        else
-        {
-            $("<h4/>", {
-                html:obj[4][0],
-                class:"mini-keyword"
-            }).appendTo($('mini-keyword_'+i));
-
-            $("<h4/>", {
-                html:obj[4][1],
-                class:"mini-keyword"
-            }).appendTo($('mini-keyword_'+i));
-        }
-        $("<div/>", {
-            id: 'bias_'+i,
-            class:"reliability"
-        }).appendTo($("#article-entry"+i));
-
-        $("#article-entry_"+i).fadeIn("slow");
+        list+="<\/div><div class=\"reliability\"></div></div>";
     }
-
-}
-function appendArticle(obj){
-
-    $("<div/>", {
-        id: 'article_'+i,
-        html: "<h2 class='article-list-elements article-title article-heading'>"+obj[0][i]+"</h2> <h2 class='article-list-elements article-author article-heading'>"+obj[3][i]+"</h2> <p class='article-text'>"+obj[2][i]+"</p>",
-        class:"article-field article-content",
-        style: "display:none"
-    }).appendTo($("#article-container"));
-    $("#article_"+i).fadeIn("slow");
-}
-function setUpSecondary(val, reset){
-    if(reset){
-        $(".secondary-container").clear();
-    }
-    else if(secondaries.length<5){
-        $(".secondary-container").append($("<div class='secondary-question'>"+val+"<\/div>"));
-    }
-    $(".secondary-question").hover(
-        $(this).animate({
-        width: "+=30px"
-    }, 1000, function() {
-    }),$(this).animate({
-            width: "-=30px"
-        }, 1000, function() {
-        }));
-    $(".secondary-question").click(function(){
-        var searchTerm = $(this).text();
-        getData(searchTerm,false);
-        $("#search-bar").val(searchTerm);
-    });
-}
-function setUpArticles(val, reset){
-    if(reset){
-        $(".secondary-container").clear();
-    }
-    else if(secondaries.length<5){
-        $(".secondary-container").append($("<div class='secondary-question'>"+val+"</div>"));
-    }
+    $(list).appendTo("#article-list-container");
 }
 function displayArticleView(){
     $(".article-view").fadeIn("slow");
     $(".secondary-container").fadeIn("slow");
+}
+function appendBiblio(index){
+    $("<h4 class=\"citation\">"+obj[index].bibliography+"<\/h4>").appendTo("#bibliography");
+}
+function updateNotepad(index){
+    array=[];
+    for(var i=0; i<obj.length();i++)
+    {
+        array.push("");
+    }
+    
+}
+function appendNotepad(){
+
+}
+
+function openArticle(index){
+    $(".article-content").empty();
+    $("#keyword-list").empty();
+    $(".secondary-container").empty();
+    $("#bibliography").empty();
+
+    var list = "";
+    list+="<h2 class=\"article-list-elements article-title article-heading\">"+obj[index].title+"<\/h2>";
+    list+="<h2 class=\"article-list-elements article-author article-heading\">";
+    if (obj[index].authors != null){
+        for(i=0;i<obj[index].authors.length;i++){
+            if(i>3){
+                list+=" et al...";
+                break;
+            }
+            list+=obj[index].authors[i]+", ";
+        }
+        list = list.substring(0, list.length - 2);
+    }
+    list+="<\/h2>"+obj[index].abstract;
+    // list+="<div>"
+    $(list).appendTo($(".article-content"));
+
+    appendKeywords(index);
+    appendSecondary(index);
+    appendBiblio(index);
 }

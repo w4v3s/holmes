@@ -13,11 +13,26 @@ var Bing = require('node-bing-api');
 var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
 var AYLIENTextAPI = require('aylien_textapi');
 //Global
+// var bluemix = {
+//     "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
+//     "username": "f40b006b-21d1-4e33-862b-466ab1c87653",
+//     "password": "Kaj1Y4jfaQm1"
+// };
+// var bluemix = {
+//   "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
+//   "username": "8153d2f9-2710-41c0-b60b-1dcad89ccc77",
+//   "password": "Yw44Q17hJe1q"
+// };
+// var bluemix = {
+//       "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
+//       "username": "33169e80-2b23-428f-94d1-1bd35558538c",
+//       "password": "IuUo24iXQTxT"
+// }
 var bluemix = {
-    "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
-    "username": "f40b006b-21d1-4e33-862b-466ab1c87653",
-    "password": "Kaj1Y4jfaQm1"
-};
+  "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
+  "username": "ef867255-921e-43ad-aa39-cf5def58a21e",
+  "password": "NWT4zDKV1T3Z"
+}
 var aylien_key = "bd308ed5f3710b40d6e280fafd4d222e";
 var aylien_app_id = "5ceffad9";
 var bing_key1 = "5c2e5368e1df4929b688a0f229ba6fc0";
@@ -263,6 +278,9 @@ app.post('/fetch', function(req, response) {
             var str = ''+chunk;
             var question = str.substring(str.indexOf("=")+1,str.length);
             question = question.replace(/\+/g, " ");
+
+            var entityArray = [];
+
             console.log(question);
 
             request("http://www.nature.com/opensearch/request?query="+question+"&httpAccept=application/json",function (error, resp, body) {
@@ -271,39 +289,30 @@ app.post('/fetch', function(req, response) {
                     body = JSON.parse(body);
 
                     var ajaxCallsRemaining = 10;
-                    var entries = [];
-                    var titles = [];
-                    var url = [];
-                    var abstract = [];
-                    var authors = [];
-                    var keywords = [];
-                    var summaries = [];
-                    var secondary = [];
-                    var sentiment = [];
-                    var bibliography = [];
 
                     if(body.feed.entry[0]==null){
-                        response.send([titles,url,abstract,authors, keywords, summaries,secondary,sentiment, bibliography]);
+                        response.send(entityArray);
                     }
                     for(a = 0; a<10; a++){
-                        entries.push(body.feed.entry[a]);
-                        titles.push(body.feed.entry[a].title);
-                        url.push(body.feed.entry[a].link);
-                        abstract.push(body.feed.entry[a]['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:description']);
-                        authors.push(body.feed.entry[a]['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator']);
+                        entityArray.push({ "title":body.feed.entry[a].title,
+                        "url":body.feed.entry[a].link,
+                        "abstract":body.feed.entry[a]['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:description'],
+                        "authors":body.feed.entry[a]['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator'],
+                        "publisher":body.feed.entry[a]['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:publisher'],
+                        "publicationDate":body.feed.entry[a]['sru:recordData']['pam:message']['pam:article']['xhtml:head']['prism:publicationDate'] });
                     }
 
-                    entries.forEach(function(entry){
+                    entityArray.forEach(function(entry){
                         console.log("GO GO GO!");
 
                                 var autho = [];
-                                if (entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator'] != null) {
-                                    for (c = 0; c < entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator'].length; c++) {
+                                if (entry.authors != null && entry.authors != 'null' && entry.authors[0] != 'null') {
+                                    for (c = 0; c < entry.authors.length; c++) {
                                         autho.push({
                                             "function": "author",
-                                            "first": entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator'][c].substring(0, entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator'][c].indexOf(" ")),
-                                            "middle": entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator'][c].substring(entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator'][c].indexOf(" "), entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator'][c].lastIndexOf(" ")),
-                                            "last": entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator'][c].substring(entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:creator'][c].lastIndexOf(" "))
+                                            "first": entry.authors[c].substring(0, entry.authors[c].indexOf(" ")),
+                                            "middle": entry.authors[c].substring(entry.authors[c].indexOf(" "), entry.authors[c].lastIndexOf(" ")),
+                                            "last": entry.authors[c].substring(entry.authors[c].lastIndexOf(" "))
                                         });
                                     }
                                 }
@@ -325,18 +334,18 @@ app.post('/fetch', function(req, response) {
                                                 "main": "pubjournal"
                                             },
                                             "pubjournal": {
-                                                "title": entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:publisher'],
-                                                "year": entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['prism:publicationDate'].substring(0,4)
+                                                "title": entry.publisher,
+                                                "year": entry.publicationDate.substring(0,4)
                                             },
-                                            "contributors":[{}]
+                                            "contributors":autho
                                     }
                                 }, function (error, res, info) {
                                     if (!error && res.statusCode === 200) {
                                         console.log(info);
-                                        bibliography.push(info.data);
+                                        entry.bibliography=info.data;
 
                                         var parameters = {
-                                            'text': entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:description'],
+                                            'text': entry.abstract,
                                             'features': {
                                                 'sentiment': {
                                                     'limit': 5
@@ -350,19 +359,16 @@ app.post('/fetch', function(req, response) {
                                             }
                                         };
                                         natural_language_understanding.analyze(parameters, function(err, res) {
-                                            console.log("Actually doing stuff");
+                                            
                                             if (err) {
                                                 console.log('error', err);
-                                                sentiment.push(["None"]);
-                                                keywords.push(["None"]);
-                                                summaries.push(["None"]);
-                                                secondary.push(["None"]);
                                                 --ajaxCallsRemaining;
                                                 if (ajaxCallsRemaining <= 0) {
-                                                    response.send([titles,url,abstract,authors, keywords, summaries,secondary,sentiment, bibliography]);
+                                                    response.send(entityArray);
                                                 }
                                             }
                                             else{
+                                                console.log("Actually doing stuff");
                                                 var s = [];
                                                 var k = [];
                                                 var c = [];
@@ -375,29 +381,28 @@ app.post('/fetch', function(req, response) {
                                                 }
                                                 console.log(k);
                                                 console.log(s);
-                                                sentiment.push(s);
-                                                keywords.push(k);
-                                                secondary.push(c);
+                                                entry.sentiment=s;
+                                                entry.keywords=k;
+                                                entry.concepts=c;
 
                                                 textapi.summarize({
-                                                    text: entry['sru:recordData']['pam:message']['pam:article']['xhtml:head']['dc:description'],
+                                                    text: entry.abstract,
                                                     title: entry.title,
                                                     sentences_number: 1
                                                 }, function(error, res) {
                                                     console.log("Almost done!");
                                                     if (error === null) {
-                                                        summaries.push(res.sentences[0]);
+                                                        entry.summary = res.sentences[0];
                                                         --ajaxCallsRemaining;
                                                         if (ajaxCallsRemaining <= 0) {
-                                                            response.send([titles,url,abstract,authors, keywords, summaries,secondary,sentiment, bibliography]);
+                                                            response.send(entityArray);
                                                         }
                                                     }
                                                     else{
                                                         console.log(error);
-                                                        summaries.push(["None"]);
                                                         --ajaxCallsRemaining;
                                                         if (ajaxCallsRemaining <= 0) {
-                                                            response.send([titles,url,abstract,authors, keywords, summaries,secondary,sentiment, bibliography]);
+                                                            response.send(entityArray);
                                                         }
                                                     }
                                                 });
@@ -405,14 +410,9 @@ app.post('/fetch', function(req, response) {
                                         });
                                     }
                                     else {
-                                        sentiment.push(["None"]);
-                                        keywords.push(["None"]);
-                                        summaries.push(["None"]);
-                                        secondary.push(["None"]);
-                                        bibliography.push(["None"]);
                                         --ajaxCallsRemaining;
                                         if (ajaxCallsRemaining <= 0) {
-                                            response.send([titles,url,abstract,authors, keywords, summaries,secondary,sentiment, bibliography]);
+                                            response.send(entityArray);
                                         }
                                     }
                                 });
@@ -420,7 +420,7 @@ app.post('/fetch', function(req, response) {
                 }
                 else{
                     console.log(error);
-                    response.send(["None"]);
+                    response.send(entityArray);
                 }
             });
         });

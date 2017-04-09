@@ -111,6 +111,7 @@ h2,h3,h4,h5{
     cursor: pointer;
     border: rgba(0,0,0,0.8) 2px solid;
 }
+
 .highlight { background-color: rgba(0, 100, 163, 0.6)}
 
 /*Articles*/
@@ -122,7 +123,7 @@ h2,h3,h4,h5{
 }
 .article-field{
     height: inherit;
-    padding: 20px;
+    padding: 5px;
     border-radius: 20px;
     background: rgba(0,0,0,0.1);
 }
@@ -133,6 +134,7 @@ h2,h3,h4,h5{
 /*Article List*/
 .article{
     padding: 20px;
+    margin: 10px 0;
     background: rgba(0,0,0,0.1);
     border: rgba(0,0,0,0.1) 2px solid ;
 }
@@ -143,18 +145,16 @@ h2,h3,h4,h5{
     margin-bottom: 15px;
 }
 .article-name{
-    font-size: 25px;
-}
-.article-desc{
     font-size: 20px;
 }
-.article-keywords{
-    font-size: 18px;
+.article-desc{
+    font-size: 13px;
 }
 .mini-keyword{
     display: inline-block;
-    font-size: 18px;
-    padding: 10px;
+    font-size: 15px;
+    padding: 5px;
+    margin:5px;
     background: rgba(255,255,255,0.1) ;
 }
 .reliability{
@@ -165,15 +165,10 @@ h2,h3,h4,h5{
 /*Article Content*/
 .article-content{
     padding: 30px;
+    overflow: auto;
 }
 .article-author{
-    font-size: 20px;
-}
-.article-text{
-    height: 80%;
-    padding: 5px;
     font-size: 16px;
-    overflow: auto;
 }
 
 /*Toolbar*/
@@ -204,25 +199,38 @@ h2,h3,h4,h5{
     background: rgba(0,255,255,0.1);
 }
 .toolbar{
-    padding: 20px;
+    padding: 5px 0;
+    width: 11vw;
 }
 
 /*Toolbar Keywords*/
 .list-keyword{
     display: inline-block;
-    font-size: 18px;
+    font-size: 15px;
     padding: 10px;
     margin:5px;
     background: rgba(255,255,255,0.1) ;
 }
+
+
 .list-keyword-selected{
     display: inline-block;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
     padding: 10px;
     margin:5px;
     background: rgba(255,255,255,0.1) ;
 }
+.lkselected{
+    display: inline-block;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px;
+    margin:5px;
+    background: rgba(255,255,255,0.1) ;
+}
+
+
 .note-pad{
     background: transparent;
     width: 90%;
@@ -238,16 +246,19 @@ h2,h3,h4,h5{
 
 .scrollbar
 {
-    float: left;
     overflow-y: scroll;
 }
 .style-1::-webkit-scrollbar-track
 {
+    opacity:0;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     border-radius: 6px;
-    background-color: #F5F5F5;
+    background-color: rgba(245,245,245,.5);
 }
-
+.style-1::-webkit-scrollbar-track-piece
+{
+    background-color: rgba(245,245,245,.3);
+}
 .style-1::-webkit-scrollbar
 {
     width: 8px;
@@ -259,4 +270,9 @@ h2,h3,h4,h5{
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
     background-color: #555;
+}
+#notes{
+    width: inherit;
+    overflow: auto;
+    height:inherit;
 }
