@@ -224,7 +224,7 @@ function appendArticleList(){
             strokeWidth: 4,
             easing: 'easeInOut',
             duration: 1400,
-            color: '#FFEA82',
+            color: '#ffca82',
             fill: 'rgba(255, 255, 255, 0.1)',
             trailColor: '#eee',
             trailWidth: 1,
