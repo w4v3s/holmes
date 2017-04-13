@@ -173,16 +173,15 @@ function appendSecondary(index){
 }
 function appendKeywords(index){
     var list = "";
-    for(i=0;i<obj[index].keywords.length;i++)
-    {
-        list+="<h4 class=\"list-keyword\" >"+obj[index].keywords[i]+"<\/h4>";
+    if(obj[index].keywords !=null) {
+        for (i = 0; i < obj[index].keywords.length; i++) {
+            list += "<h4 class=\"list-keyword\" >" + obj[index].keywords[i] + "<\/h4>";
+        }
     }
     $(list).appendTo("#keyword-list");
     setupKeywordClick();
 }
 function appendArticleList(){
-    // 0457
-
     var list = "";
     for(i=0;i<obj.length;i++){
         list+="<div class=\"article\" onclick=\"openArticle("+i+")\"><h3 class=\"article-list-elements article-name\">" + obj[i].title + "<\/h3>";
