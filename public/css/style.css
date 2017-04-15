@@ -257,7 +257,6 @@ h2,h3,h4,h5{
 }
 
 /*Scrollbar*/
-
 .scrollbar
 {
     overflow-y: scroll;
@@ -267,23 +266,23 @@ h2,h3,h4,h5{
     opacity:0;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     border-radius: 6px;
-    background-color: rgba(245,245,245,.5);
+    background-color: rgba(0,0,0,.1);
 }
 .style-1::-webkit-scrollbar-track-piece
 {
-    background-color: rgba(245,245,245,.3);
+    /*background-color: rgba(245,245,245,.3);*/
 }
 .style-1::-webkit-scrollbar
 {
     width: 8px;
-    background-color: #F5F5F5;
+    /*background-color: #F5F5F5;*/
 }
 
 .style-1::-webkit-scrollbar-thumb
 {
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-    background-color: #555;
+    background-color: whitesmoke;
 }
 #notes{
     width: inherit;
