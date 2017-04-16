@@ -10,7 +10,7 @@ var dots;
 var noteindex;
 $(document).ready(function(){
     $(".title-container").animate({
-        top: "-=25vh",
+        top: "-=15vh",
         opacity:1.0
     }, 1000, function() {
         $(".title-logo").fadeIn("slow");
@@ -23,7 +23,6 @@ $(document).ready(function(){
             searchBarMove();
             searchValues();
         }
-    
     });
     $("#keywords").click(function () {
         $("#notes-panel").hide();
@@ -113,17 +112,6 @@ function searchBarMove(){
         });
         searchPage = true;
         $(".title-text").fadeOut("medium");
-        $(".title-logo").animate({
-            width:"40px",
-            top:"20px",
-            left:"20px"
-        }, 1000, function() {
-        });
-        $("#logo").animate({
-            height: "60px",
-            width:"60px"
-        }, 1000, function() {
-        });
     }
 }
 function searchValues(){
@@ -164,9 +152,8 @@ function appendSecondary(index){
     for(var i=0;i<obj[index].concepts.length;i++)
     {
         $("<h2/>", {
-            id: 'tags_'+i,
             html: obj[index].concepts[i],
-            class:"secondary-question"
+            class:"secondary-question click"
         }).appendTo(".secondary-container");
     }
     setupSecondaryClick();
@@ -175,7 +162,7 @@ function appendKeywords(index){
     var list = "";
     if(obj[index].keywords !=null) {
         for (i = 0; i < obj[index].keywords.length; i++) {
-            list += "<h4 class=\"list-keyword\" >" + obj[index].keywords[i] + "<\/h4>";
+            list += "<h4 class=\"list-keyword click\" >" + obj[index].keywords[i] + "<\/h4>";
         }
     }
     $(list).appendTo("#keyword-list");
@@ -184,14 +171,14 @@ function appendKeywords(index){
 function appendArticleList(){
     var list = "";
     for(i=0;i<obj.length;i++){
-        list+="<div class=\"article\" onclick=\"openArticle("+i+")\"><h3 class=\"article-list-elements article-name\">" + obj[i].title + "<\/h3>";
+        list+="<div class=\"article click\" onclick=\"openArticle("+i+")\"><h3 class=\"article-list-elements article-name\">" + obj[i].title + "<\/h3>";
         if(obj[i].summary!=null)
             list+="<h4 class=\"article-list-elements article-desc\">" + obj[i].summary + "<\/h4>";
         list+="<div class=\"article-list-elements article-keywords\">";
         if(obj[i].keywords != null && obj[i].keywords.length>1)
         {
             for(a = 0; a<2;a++){
-                list+="<h4 class=\"mini-keyword\">"+obj[i].keywords[a]+"</h4>";
+                list+="<h4 class=\"mini-keyword click\">"+obj[i].keywords[a]+"</h4>";
             }
         }
         var percen = parseInt(Math.abs( (obj[i].sentiment)*100));

@@ -7,8 +7,8 @@ body{
     width: 100vw;
     color:white;
     font-family: 'Lato', sans-serif;
-    background-image: url("../img/sunrise.jpg");
-    /*background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);*/
+    /*background-image: url("../img/sunrise.jpg");*/
+    background: linear-gradient(10deg, #A85B65, #3F426D, #222546 );
 }
 .main-content{
     text-align:center;
@@ -30,8 +30,9 @@ h2,h3,h4,h5{
     height: inherit;
     padding: 2px;
 }
-
-/*#383838*/
+.click:hover{
+    cursor: pointer;
+}
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color:    whitesmoke !important;
@@ -64,15 +65,20 @@ h2,h3,h4,h5{
 
 }
 .title-logo{
-    top:35vh;
+    position: absolute;
+    top:20px;
+    width:40px;
+    left:20px;
+    text-align: center;
 }
 .title{
     text-align: center;
-    font-size: 60px;
+    font-size: 100px;
     font-family: 'Macondo', cursive !important;
 }
-.logo{
-    position: absolute;
+#logo{
+    height: 60px;
+    width: 60px;
 }
 #search-bar{
     display: inline;
