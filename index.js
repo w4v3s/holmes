@@ -11,6 +11,7 @@ var fs = require('fs');
 var Bing = require('node-bing-api');
 var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
 var AYLIENTextAPI = require('aylien_textapi');
+var havenondemand = require("havenondemand");
 
 //API Keys
 // var bluemix = {
@@ -53,6 +54,7 @@ var bluemix = {
   "username": "b9a28510-fe8e-4605-bc1e-ee8434cec916",
   "password": "VknWNQ3dtRnJ"
 };
+
 // var aylien_key = "bd308ed5f3710b40d6e280fafd4d222e";
 // var aylien_app_id = "5ceffad9";
 var aylien_key = "c49162c07d76aef113d427c8bf7b5beb";
@@ -63,6 +65,7 @@ var CORE_key = "53Ictd96ZekQql2yfzgCTLE7mUwpnVsb";
 var DIFF_key = "e5d2443849dcf55543df0010a2daf5d6";
 var ebib_key = "e8d16813ad492175b055390bd9d62c2b";
 var scopus_key = "f5d063cf0af897101eb37b9294d9c731";
+var haven_key = "fd599798-df20-48df-95d1-5bdb4a735cb9";
 
 /*Setup*/
 var app = express();
@@ -81,8 +84,30 @@ var textapi = new AYLIENTextAPI({
     application_id: aylien_app_id,
     application_key: aylien_key
 });
+var havenapi = new havenondemand.HODClient(haven_key, 'v1')
 
-/*Retriving Data*/
+/*Retrieving Data*/
+function relatedConcepts(text, num)
+{
+    var data={'text' : text}
+    havenapi.post('findrelatedconcepts', data, true, function(err, res){
+        if(!err)
+        {
+            var cb = [];
+            console.log(res);
+            for(var i=0;i<num;i++)
+            {
+                cb.push(res.entities[i])
+            }
+            callback(cb);
+        }
+        else
+        {
+            console.log(err);
+            callback(null);
+        }
+    })
+}
 function getSummary(text, title, length, callback){
     textapi.summarize({
         text: text,
@@ -131,6 +156,17 @@ function languageAnalysis(text, callback){
             callback(null, null, null);
         }
     });
+}
+function createMap(depth, responseArr, responseNum, text)
+{
+    if(depth==0)
+    {
+
+    }
+    else
+    {
+        
+    }
 }
 function getCitation(title, publisher, publicationYear, authors, callback){
     var autho = [];
