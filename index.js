@@ -87,19 +87,15 @@ var textapi = new AYLIENTextAPI({
 var havenapi = new havenondemand.HODClient(haven_key, 'v1');
 
 /*Retrieving Data*/
-function relatedConcepts(text, num)
-{
-    var data={'text' : text};
-    havenapi.post('findrelatedconcepts', data, true, function(err, res){
+function relatedConcepts(text, callback) {
+    havenapi.post('findrelatedconcepts',
+        {'text' : text,
+        'max_results':15,
+        'sample_size':2500}
+        , true, function(err, res){
         if(!err)
         {
-            var cb = [];
-            console.log(res);
-            for(var i=0;i<num;i++)
-            {
-                cb.push(res.entities[i])
-            }
-            callback(cb);
+            callback(res.entities);
         }
         else
         {
@@ -483,8 +479,9 @@ app.post('/search', function(req, response) {
             }
             entityArray.forEach(function(entry){
                 console.log("entered array");
-                getCitation(entry.title,entry.publisher,entry.publicationDate.substring(0,4),entry.authors,function(){
+                getCitation(entry.title,entry.publisher,entry.publicationDate.substring(0,4),entry.authors,function(citation){
                     console.log("\tgot citation");
+                    entry.bibliography = citation;
                     languageAnalysis(entry.abstract, function(s, k , c){
                         console.log("\t\tlanguage analysis");
                         entry.sentiment=s;

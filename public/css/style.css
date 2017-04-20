@@ -7,8 +7,9 @@ body{
     width: 100vw;
     color:white;
     font-family: 'Lato', sans-serif;
-    /*background-image: url("../img/sunrise.jpg");*/
-    background: linear-gradient(10deg, #A85B65, #3F426D, #222546 );
+    background-image: url("../img/sunrise.jpg");
+    /*background-image: url("../img/sunrise2.jpg");*/
+    /*background: linear-gradient(10deg, #A85B65, #3F426D, #222546 );*/
 }
 .main-content{
     text-align:center;
@@ -62,7 +63,6 @@ h2,h3,h4,h5{
     text-align: center;
     width: 100vw;
     opacity: 0;
-
 }
 .title-logo{
     position: absolute;
@@ -71,10 +71,18 @@ h2,h3,h4,h5{
     left:20px;
     text-align: center;
 }
+.title-box{
+    display: inline-block;
+    /*border: rgba(230,230,230,10) 2px solid;*/
+    text-align: center;
+}
 .title{
+    display: inline;
     text-align: center;
     font-size: 100px;
     font-family: 'Macondo', cursive !important;
+    /*font-family: 'Raleway', sans-serif !important;*/
+    padding: 20px;
 }
 #logo{
     height: 60px;
