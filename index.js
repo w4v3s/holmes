@@ -84,12 +84,12 @@ var textapi = new AYLIENTextAPI({
     application_id: aylien_app_id,
     application_key: aylien_key
 });
-var havenapi = new havenondemand.HODClient(haven_key, 'v1')
+var havenapi = new havenondemand.HODClient(haven_key, 'v1');
 
 /*Retrieving Data*/
 function relatedConcepts(text, num)
 {
-    var data={'text' : text}
+    var data={'text' : text};
     havenapi.post('findrelatedconcepts', data, true, function(err, res){
         if(!err)
         {
