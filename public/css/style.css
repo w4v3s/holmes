@@ -7,9 +7,9 @@ body{
     width: 100vw;
     color:white;
     font-family: 'Lato', sans-serif;
-    background-image: url("../img/sunrise.jpg");
-    /*background-image: url("../img/sunrise2.jpg");*/
-    /*background: linear-gradient(10deg, #A85B65, #3F426D, #222546 );*/
+    /*background-image: url("../img/sunrise.jpg");*/
+    background-image: url("../img/sunrise2.jpg");
+    /*background: url("../img/octagon_pattern.png"), linear-gradient(10deg, #A85B65, #3F426D, #222546 );*/
 }
 .main-content{
     text-align:center;
@@ -67,7 +67,7 @@ h2,h3,h4,h5{
 .title-logo{
     position: absolute;
     top:20px;
-    width:40px;
+    width:60px;
     left:20px;
     text-align: center;
 }
@@ -76,6 +76,7 @@ h2,h3,h4,h5{
     /*border: rgba(230,230,230,10) 2px solid;*/
     text-align: center;
 }
+
 .title{
     display: inline;
     text-align: center;
@@ -329,4 +330,17 @@ h2,h3,h4,h5{
     background-color: inherit;
     border-style: none;
     outline:0;
+}
+
+/*Login*/
+.account-img{
+    position: absolute;
+    top:20px;
+    width:60px;
+    right:20px;
+    text-align: center;
+}
+#account{
+    height: 60px;
+    width: 60px;
 }

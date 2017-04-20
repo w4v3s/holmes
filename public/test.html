@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dawn</title>
+    <link href="https://fonts.googleapis.com/css?family=Macondo" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <script type="text/javascript" src="js/jquery.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $("#div1").click(function(){
+                $('html, body').animate({
+                    scrollTop: $("#div2").offset().top
+                }, 500);
+            });
+            $("#div2").click(function(){
+                $('html, body').animate({
+                    scrollTop: $("#div1").offset().top
+                }, 500);
+            });
+        });
+    </script>
+    <style>
+        #div1{
+            background-color: blue;
+            height: 100vh;
+            width: 100vw;
+        }
+        #div2{
+            background-color: green;
+            height: 100vh;
+            width: 100vw;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="size" id="div1">
+
+    </div>
+    <div class="size" id="div2">
+
+    </div>
+</body>
+</html>

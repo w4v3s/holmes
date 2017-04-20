@@ -14,6 +14,7 @@ $(document).ready(function(){
         opacity:1.0
     }, 1000, function() {
         $(".title-logo").fadeIn("slow");
+        $(".account-img").fadeIn("slow");
         $(".search-container").fadeIn("slow");
     });
 
@@ -24,17 +25,24 @@ $(document).ready(function(){
             searchValues();
         }
     });
-    $("#keywords").click(function () {
-        $("#notes-panel").hide();
-        $("#bibliography").hide();
-        $("#keyword-list").show();
-        $("#notes").removeClass("notes-selected");
-        $("#citation").removeClass("citation-selected");
-        $("#keywords").addClass("keywords-selected");
-        $(".toolbar-container").removeClass("notes-selected");
-        $(".toolbar-container").removeClass("citation-selected");
-        $(".toolbar-container").addClass("keywords-selected");
+
+    $('.account-img').click(function() {
+        $('#login-content').slideToggle();
+        $('#login-content').toggleClass('active');
+
+        $("#keywords").click(function () {
+            $("#notes-panel").hide();
+            $("#bibliography").hide();
+            $("#keyword-list").show();
+            $("#notes").removeClass("notes-selected");
+            $("#citation").removeClass("citation-selected");
+            $("#keywords").addClass("keywords-selected");
+            $(".toolbar-container").removeClass("notes-selected");
+            $(".toolbar-container").removeClass("citation-selected");
+            $(".toolbar-container").addClass("keywords-selected");
+        });
     });
+
     $("#citation").click(function () {
         $("#notes-panel").hide();
         $("#keyword-list").hide();
@@ -62,12 +70,7 @@ $(document).ready(function(){
         })
     });
 
-
     setupKeywordClick();
-
-    //highlight();
-    //notepadMemory();
-
 });
 function startLoading(){
     dots = window.setInterval( function() {
@@ -277,4 +280,4 @@ function openArticle(index){
 }
 function isOverflowed(element){
     return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
-}   
+}
