@@ -104,10 +104,6 @@ function setupSecondaryClick(){
 }
 function searchBarMove(){
     if (!searchPage){
-        $(".search-container").animate({
-            top: "30px"
-        }, 1000, function() {
-        });
         $("#search-bar").animate({
             width: "40vw",
             padding:"30px"

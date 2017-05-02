@@ -1,15 +1,18 @@
 html{
     /*background-image: url("img/sunrise.jpg");*/
     /*background-color: #cccccc;*/
+    /*background:linear-gradient(10deg, #A85B65, #3F426D, #222546 );*/
 }
 body{
-    height: 100vh;
+    height: 200vh;
     width: 100vw;
     color:white;
     font-family: 'Lato', sans-serif;
-    /*background-image: url("../img/sunrise.jpg");*/
-    background-image: url("../img/sunrise2.jpg");
-    /*background: url("../img/octagon_pattern.png"), linear-gradient(10deg, #A85B65, #3F426D, #222546 );*/
+    background: url("../img/sunrise4.jpg") no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 .main-content{
     text-align:center;
@@ -19,17 +22,10 @@ body{
 .main-container {
     display: table;
     width: 100%;
+    height: 100%;
 }
 h2,h3,h4,h5{
     margin: 0;
-}
-.row{
-    margin:0;
-    height: inherit;
-}
-.col{
-    height: inherit;
-    padding: 2px;
 }
 .click:hover{
     cursor: pointer;
@@ -50,34 +46,53 @@ h2,h3,h4,h5{
     color:    whitesmoke !important;
 }
 
-/*Search*/
-.search-container{
-    position: absolute;
-    width:100vw;
-    top:55vh;
-    text-align: center;
-}
-.title-container{
-    position: absolute;
-    top:50vh;
-    text-align: center;
+/*Layout*/
+#search-view{
+    height: 100vh;
     width: 100vw;
-    opacity: 0;
 }
-.title-logo{
+#introduction-view{
+    height: 100vh;
+    width: 100vw;
+}
+#article-view{
+    height: 100vh;
+    width: 100vw;
+}
+#loading-view{
+    height: 100vh;
+    width: 100vw;
+}
+
+/*Icons*/
+.small-icon{
+    height: 60px;
+    width: 60px;
+}
+#logo-icon{
     position: absolute;
     top:20px;
     width:60px;
     left:20px;
     text-align: center;
 }
-.title-box{
-    display: inline-block;
-    /*border: rgba(230,230,230,10) 2px solid;*/
+#account-icon{
+    position: absolute;
+    top:20px;
+    width:60px;
+    right:20px;
     text-align: center;
 }
 
-.title{
+/*Title*/
+#title-container{
+    position: absolute;
+    top:40vh;
+    text-align: center;
+    width: 100vw;
+    opacity: 0;
+}
+#title-text{
     display: inline;
     text-align: center;
     font-size: 100px;
@@ -85,9 +100,11 @@ h2,h3,h4,h5{
     /*font-family: 'Raleway', sans-serif !important;*/
     padding: 20px;
 }
-#logo{
-    height: 60px;
-    width: 60px;
+
+/*Search*/
+#search-container{
+    width:100vw;
+    text-align: center;
 }
 #search-bar{
     display: inline;
@@ -101,10 +118,76 @@ h2,h3,h4,h5{
     width: 60vw;
 }
 
-/*Question*/
-.article-view{
-    width: 100vw;
+/*Articles*/
+.article-col{
+    height: inherit;
+    padding: 2px;
 }
+.article-field{
+    height: inherit;
+    padding: 5px;
+    /*border-radius: 20px;*/
+    /*background: rgba(0,0,0,0.1);*/
+}
+#article-container{
+    margin: 10px;
+    height:inherit;
+}
+
+.article{
+    padding: 20px;
+    margin: 10px 0;
+    background: rgba(0,0,0,0.3);
+    border: rgba(0,0,0,0.5) 2px solid;
+}
+.article-list-elements{
+    margin-bottom: 15px;
+}
+.article-name{
+    font-size: 20px;
+}
+.article-desc{
+    font-size: 13px;
+}
+.mini-keyword{
+    display: inline-block;
+    font-size: 15px;
+    padding: 5px;
+    margin:5px;
+    background: rgba(255,255,255,0.1) ;
+}
+.article-reliability {
+    margin: 20px;
+    height: 8px;
+}
+#article-list-container{
+    height: inherit;
+    overflow: auto;
+}
+
+.article-title{
+    font-size: 20px;
+}
+.article-author{
+    font-size: 16px;
+}
+.article-text{
+    font-size: 18px;
+}
+#article-content{
+    padding: 30px;
+    height: inherit;
+    overflow: auto;
+}
+
+.toolbar-container{
+    height: 91%;
+    overflow: auto;
+}
+#article-toolbox{
+    height: inherit;
+}
+
 .secondary-container{
     position: absolute;
     margin-top: 110px;
@@ -127,68 +210,18 @@ h2,h3,h4,h5{
     border: rgba(0,0,0,0.8) 2px solid;
 }
 
-/*.highlight { background-color: rgba(0, 100, 163, 0.6)}*/
-.highlight{ background-color: rgba(255, 202, 130,0.5)}
+.highlight{ background-color: rgba(255, 250, 130,0.5)}
 
 /*Articles*/
-.article-view{
-    position:absolute;
-    top: 200px;
-    height: 65vh;
-    width: inherit;
-}
-.article-field{
-    height: inherit;
-    padding: 5px;
-    border-radius: 20px;
-    background: rgba(0,0,0,0.1);
-}
 .col-gap{
     padding:10px;
 }
 
 /*Article List*/
-.article{
-    padding: 20px;
-    margin: 10px 0;
-    background: rgba(0,0,0,0.1);
-    border: rgba(0,0,0,0.1) 2px solid ;
-}
-.article-list{
-    overflow: auto;
-}
-.article-list-elements{
-    margin-bottom: 15px;
-}
-.article-name{
-    font-size: 20px;
-}
-.article-desc{
-    font-size: 13px;
-}
-.mini-keyword{
-    display: inline-block;
-    font-size: 15px;
-    padding: 5px;
-    margin:5px;
-    background: rgba(255,255,255,0.1) ;
-}
-/*.reliability{*/
-    /*background: linear-gradient(141deg, rgba(255,0,0,0.5), rgba(255,250,10,0.5), rgba(0,255,0,0.5));*/
-    /*height: 10px;*/
-/*}*/
+
 
 /*Article Content*/
-.article-content{
-    padding: 30px;
-    overflow: auto;
-}
-.article-author{
-    font-size: 16px;
-}
-.article-text{
-    font-size: 18px;
-}
+
 .intro{
     text-align: center;
     font-size: 40px;
@@ -206,10 +239,7 @@ h2,h3,h4,h5{
     min-width: 50px;
     text-align: center;
 }
-.toolbar-container{
-    height: 91%;
-    overflow: auto;
-}
+
 .toolbar-buttons{
     position: inline-block;
     height: auto;
@@ -319,10 +349,7 @@ h2,h3,h4,h5{
     font-size: 150px;
     color:rgba(0,0,0,.3);
 }
-.reliability {
-    margin: 20px;
-    height: 8px;
-}
+
 #pad{
     width: 12vw;
     height:47vh;
@@ -333,14 +360,3 @@ h2,h3,h4,h5{
 }
 
 /*Login*/
-.account-img{
-    position: absolute;
-    top:20px;
-    width:60px;
-    right:20px;
-    text-align: center;
-}
-#account{
-    height: 60px;
-    width: 60px;
-}

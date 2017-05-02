@@ -20,28 +20,40 @@
 
 </head>
 <body>
-    <div class="search-view">
-        <div class="title-container title-text">
-            <div class="title-box">
-                <h1 class="title">dawn</h1>
-            </div>
-        </div>
-        <div class="title-logo click" style="display: none;">
-            <img id="logo" src="img/dawn.png">
-        </div>
-        <div class="account-img click" style="display: none;">
-            <img id="account" src="img/account.png">
-        </div>
+
+    <!--Icons-->
+    <div class="click" id="logo-icon" style="display: none;">
+        <img class="small-icon" src="img/dawn.png">
     </div>
-    <div class="search-container" style="display: none">
-        <input id="search-bar" class = "form-control" type="text" class="smallfield" name="search-term" placeholder="type something" autocomplete="off" oninput="searchBarMove()" autofocus>
-    </div>
-    <div id="secondary-container" class="secondary-container" style="display: none">
-        <h2 class="secondary-question">What is Agent Orange</h2>
-        <h2 class="secondary-question">Birth defects caused by Agent Orange</h2>
+    <div class="click" id = "account-icon" style="display: none;">
+        <img id="small-icon" src="img/account.png">
     </div>
 
-    <div class="loading-view" style="display: none;">
+    <div id="search-view">
+        <div class="main-container">
+            <div class="main-content">
+                <div id="title-container">
+                    <h1 id="title-text">dawn</h1>
+                </div>
+
+                <div id="search-container" style="display: none">
+                    <input id="search-bar" class = "form-control" type="text" name="search-term" placeholder="type something" autocomplete="off" oninput="searchBarMove()" autofocus>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<div id="introduction-view">-->
+        <!--<div class="main-container">-->
+            <!--<div class="main-content">-->
+                <!--<div class="info-container" style="display: none">-->
+                    <!--<h1>Test</h1>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <div id="loading-view" style="display: none;">
         <div class="main-container">
             <div class="main-content">
                 <span id="wait"></span>
@@ -49,81 +61,79 @@
         </div>
     </div>
 
-    <!-- TODO set up with react.js -->
-    <div class="article-view" style="display: none">
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-gap col col-md-3">
-                <div id="article-list-container" class="article-field article-list scrollbar style-1">
+    <div id="article-view">
+        <div class="row" id="article-container">
+            <div class="col-md-3 article-col">
+                <div id="article-list-container" class="article-field scrollbar style-1">
                     <div class="article">
-                        <h3 class="article-list-elements article-name">
-                            Agent Orange
+                        <h3 class="article-name article-list-elements">
+                            Article Name
                         </h3>
-                        <h4 class="article-list-elements article-desc">
-                            Something about agent orange, pretty cool and stuff
+                        <h4 class="article-desc article-list-elements">
+                            Article Desc
                         </h4>
-                        <div class="article-list-elements article-keywords">
+                        <div class="article-keywords article-list-elements">
                             <h4 class="mini-keyword">agent orange</h4>
                             <h4 class="mini-keyword">orange</h4>
                         </div>
-                        <div class="reliability"></div>
+                        <div class="article-reliability"></div>
                     </div>
                 </div>
             </div>
-            <div class="col-gap col col-md-7">
-                <div class="row">
-                    <div id="article-container" class="col col-md-9">
-                        <div class="article-field article-content scrollbar style-1">
-                            <h2 class="article-list-elements article-title article-heading">
-                                Wow you opened an article
-                            </h2>
-                            <h2 class="article-list-elements article-author article-heading">
-                                Joe Smith
-                            </h2>
-                            <p class="article-text">
-                                In The Great Gatsby, blue is used quite frequency to create a feel for a specific scene or individual. In Nick’s description of Doctor T. J. Eckleburg, he states that the eyes on the billboard are blue and gigantic, building a tone of omniscience. These eyes, often seen as the eyes of God, are given the color to describe a depressing atmosphere over New York. It foreshadows the awful effects that occur to Gatsby, Wilson, providing a tone of dread. Without blue, the entire landscape of Wilson’s workshop and the city becomes less dreary. In addition, Fitzgerald uses blue to provide a depressing tone to the story after Myrtle’s death, enhancing the sadness and emptiness Nick feels, caught in these events. However, Fitzgerald also uses blue to describe Wilson’s eyes when Tom and Nick pull up at his shop. This can be an indication of Wilson’s loyalty to Tom, as Fitzgerald often refers to one’s eyes to describe a specific character. Throughout the story, Wilson is seen to interact with Tom as if he is a friend, despite Tom’s affair with his wife. Even after Daisy kills Myrtle, Tom is the one attempting to console Wilson. This use of blue is repeated when Cody gives Gatsby a blue coat as a gift, since Gatsby was always loyal to him. Although there isn’t much backstory about Gatsby’s experiences with Dan Cody, the splash of blue enhances the sense of Gatsby and Cody’s loyalty and friendship. Without the addition of color, there is a lack of feeling between the two friends, and Gatsby’s loss of his inheritance is less meaningful. Fitzgerald also uses blue to describe tranquility and peace. When Nick gazes out the window in New York during Tom and Myrtle’s party, the description of the blue sky helps the audience see Nick as mesmerized to the city life, breathing in the new environment. It enhances the haziness in the smoky apartment, and allows the audience to feel Nick’s wonder.
-                            </p>
+            <div class="col-md-7 article-col">
+                <div id="article-content" class="article-field scrollbar style-1">
+                    <h2 class="article-title">
+                        Wow you opened an article
+                    </h2>
+                    <h2 class="article-author">
+                        Joe Smith
+                    </h2>
+                    <p class="article-text">
+                        In The Great Gatsby, blue is used quite frequency to create a feel for a specific scene or individual. In Nick’s description of Doctor T. J. Eckleburg, he states that the eyes on the billboard are blue and gigantic, building a tone of omniscience. These eyes, often seen as the eyes of God, are given the color to describe a depressing atmosphere over New York. It foreshadows the awful effects that occur to Gatsby, Wilson, providing a tone of dread. Without blue, the entire landscape of Wilson’s workshop and the city becomes less dreary. In addition, Fitzgerald uses blue to provide a depressing tone to the story after Myrtle’s death, enhancing the sadness and emptiness Nick feels, caught in these events. However, Fitzgerald also uses blue to describe Wilson’s eyes when Tom and Nick pull up at his shop. This can be an indication of Wilson’s loyalty to Tom, as Fitzgerald often refers to one’s eyes to describe a specific character. Throughout the story, Wilson is seen to interact with Tom as if he is a friend, despite Tom’s affair with his wife. Even after Daisy kills Myrtle, Tom is the one attempting to console Wilson. This use of blue is repeated when Cody gives Gatsby a blue coat as a gift, since Gatsby was always loyal to him. Although there isn’t much backstory about Gatsby’s experiences with Dan Cody, the splash of blue enhances the sense of Gatsby and Cody’s loyalty and friendship. Without the addition of color, there is a lack of feeling between the two friends, and Gatsby’s loss of his inheritance is less meaningful. Fitzgerald also uses blue to describe tranquility and peace. When Nick gazes out the window in New York during Tom and Myrtle’s party, the description of the blue sky helps the audience see Nick as mesmerized to the city life, breathing in the new environment. It enhances the haziness in the smoky apartment, and allows the audience to feel Nick’s wonder.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-2 article-col">
+                <div id = "article-toolbox" class="article-field">
+                    <div class="toolbar-container keywords-selected">
+                        <div class="toolbar scrollbar style-1" id="keyword-list">
+                            <h4 class="list-keyword">gatsby</h4>
+                            <h4 class="list-keyword">nick</h4>
+                            <h4 class="list-keyword-selected list-keyword">blue</h4>
+                        </div>
+                        <div class="toolbar scrollbar style-1" id="bibliography" style="display: none">
+                            <h4 class="citation">Douglass, Frederick. <i>Narrative of the Life of Frederick Douglass.</i> N.p.: Dover Publications, 1995. Print.</h4>
+                        </div>
+                        <div class="toolbar" id="notes-panel" style="display: none">
+                            <h4 class="note-pad">Notepad</h4>
+                            <textarea id="pad" class="scrollbar style-1"></textarea>
                         </div>
                     </div>
-                    <div class="col col-md-3">
-                        <div class="article-field article-toolbox">
-                            <div class="toolbar-container keywords-selected">
-                                <div class="toolbar scrollbar style-1" id="keyword-list">
-                                    <h4 class="list-keyword">gatsby</h4>
-                                    <h4 class="list-keyword">nick</h4>
-                                    <h4 class="list-keyword-selected list-keyword">blue</h4>
-                                </div>
-                                <div class="toolbar scrollbar style-1" id="bibliography" style="display: none">
-                                    <h4 class="citation">Douglass, Frederick. <i>Narrative of the Life of Frederick Douglass.</i> N.p.: Dover Publications, 1995. Print.</h4>
-                                </div>
-                                <div class="toolbar" id="notes-panel" style="display: none">
-                                    <h4 class="note-pad">Notepad</h4>
-                                    <textarea id="pad" class="scrollbar style-1"></textarea>
-                                </div>
+                    <div class="toolbar-buttons row">
+                        <div class="col col-sm-4">
+                            <div class="tb-container click keywords-selected" id="keywords">
+                                <span class="tb-button glyphicon glyphicon-list"></span>
                             </div>
-                            <div class="toolbar-buttons row">
-                                <div class="col col-sm-4">
-                                    <div class="tb-container click keywords-selected" id="keywords">
-                                        <span class="tb-button glyphicon glyphicon-list"></span>
-                                    </div>
-                                </div>
-                                <div class="col col-sm-4">
-                                    <div class="tb-container click" id="citation">
-                                        <span class="tb-button glyphicon glyphicon-education"></span>
-                                    </div>
-                                </div>
-                                <div class="col col-sm-4">
-                                    <div class="tb-container click" id="notes">
-                                        <span class="tb-button glyphicon glyphicon-pencil"></span>
-                                    </div>
-                                </div>
+                        </div>
+                        <div class="col col-sm-4">
+                            <div class="tb-container click" id="citation">
+                                <span class="tb-button glyphicon glyphicon-education"></span>
+                            </div>
+                        </div>
+                        <div class="col col-sm-4">
+                            <div class="tb-container click" id="notes">
+                                <span class="tb-button glyphicon glyphicon-pencil"></span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-1"></div>
         </div>
     </div>
+
+    <!--<div id="secondary-container" class="secondary-container" style="display: none">-->
+        <!--<h2 class="secondary-question">What is Agent Orange</h2>-->
+        <!--<h2 class="secondary-question">Birth defects caused by Agent Orange</h2>-->
+    <!--</div>-->
 </body>
 </html>
