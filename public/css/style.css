@@ -174,43 +174,42 @@ h2,h3,h4,h5{
 .article-text{
     font-size: 18px;
 }
+.highlight{ background-color: rgba(255, 250, 130,0.5)}
 #article-content{
     padding: 30px;
     height: inherit;
     overflow: auto;
 }
 
-.toolbar-container{
-    height: 91%;
-    overflow: auto;
+/*Toolbar*/
+.toolbar{
+    padding: 5px;
 }
 #article-toolbox{
     height: inherit;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+#toolbar-buttons{
+    height: 48px;
+    width: 100%;
+    margin:0;
+}
+#toolbar-container {
+    height: inherit;
+}
+#keywords-list {
+    height: calc(100% - 48px);
+}
+.toolbar-buttons-col{
+    margin:0;
 }
 
-.secondary-container{
-    position: absolute;
-    margin-top: 110px;
-    text-align: center;
-    width: 100vw;
-}
-.secondary-question{
-    display:inline-block;
-    border: rgba(0,0,0,0.1) 2px solid;
-    font-size: 20px;
-    margin: 0 20px;
-    padding: 15px;
-    border-radius: 5px;
-    color: whitesmoke;
-    background: rgba(0,0,0,0.1);
-    transition: border .5s ease;
-}
-.secondary-question:hover{
-    cursor: pointer;
-    border: rgba(0,0,0,0.8) 2px solid;
-}
 
-.highlight{ background-color: rgba(255, 250, 130,0.5)}
+
+
 
 /*Articles*/
 .col-gap{
@@ -230,21 +229,16 @@ h2,h3,h4,h5{
 }
 
 /*Toolbar*/
-.tb-button{
-    font-size: 30px;
-    text-align: center;
+.tb-button {
+    font-size: 48px;
 }
-.tb-container{
-    min-height:50px;
-    min-width: 50px;
-    text-align: center;
+.tb-container {
+    height: 48px;
+    width: 48px;
 }
 
-.toolbar-buttons{
-    position: inline-block;
-    height: auto;
-}
-.keywords-selected{
+
+#keywords-selected{
     background: rgba(0,0,0,0.1);
 }
 .citation-selected{
@@ -253,10 +247,7 @@ h2,h3,h4,h5{
 .notes-selected{
     background: rgba(0,255,255,0.1);
 }
-.toolbar{
-    padding: 5px;
-    width: 13xvw;
-}
+
 #bibliography{
     padding: 20px;
 }
@@ -360,3 +351,26 @@ h2,h3,h4,h5{
 }
 
 /*Login*/
+
+/*Secondary*/
+.secondary-container{
+    position: absolute;
+    margin-top: 110px;
+    text-align: center;
+    width: 100vw;
+}
+.secondary-question{
+    display:inline-block;
+    border: rgba(0,0,0,0.1) 2px solid;
+    font-size: 20px;
+    margin: 0 20px;
+    padding: 15px;
+    border-radius: 5px;
+    color: whitesmoke;
+    background: rgba(0,0,0,0.1);
+    transition: border .5s ease;
+}
+.secondary-question:hover{
+    cursor: pointer;
+    border: rgba(0,0,0,0.8) 2px solid;
+}

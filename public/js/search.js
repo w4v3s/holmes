@@ -9,13 +9,12 @@ var array;
 var dots;
 var noteindex;
 $(document).ready(function(){
-    $(".title-container").animate({
+    $("#title-container").animate({
         top: "-=15vh",
         opacity:1.0
     }, 1000, function() {
-        $(".title-logo").fadeIn("slow");
-        $(".account-img").fadeIn("slow");
-        $(".search-container").fadeIn("slow");
+        $(".icons").fadeIn("slow");
+        $("#search-container").fadeIn("slow");
     });
 
     $("#search-bar").keydown(function(event){
@@ -26,21 +25,22 @@ $(document).ready(function(){
         }
     });
 
-    $('.account-img').click(function() {
+    $('#account-icon').click(function() {
         $('#login-content').slideToggle();
         $('#login-content').toggleClass('active');
 
-        $("#keywords").click(function () {
-            $("#notes-panel").hide();
-            $("#bibliography").hide();
-            $("#keyword-list").show();
-            $("#notes").removeClass("notes-selected");
-            $("#citation").removeClass("citation-selected");
-            $("#keywords").addClass("keywords-selected");
-            $(".toolbar-container").removeClass("notes-selected");
-            $(".toolbar-container").removeClass("citation-selected");
-            $(".toolbar-container").addClass("keywords-selected");
-        });
+    });
+
+    $(".keywords").click(function () {
+        $("#notes-panel").hide();
+        $("#bibliography").hide();
+        $("#keyword-list").show();
+        $("#notes").removeClass("notes-selected");
+        $("#citation").removeClass("citation-selected");
+        $("#keywords").addClass("keywords-selected");
+        $(".toolbar-container").removeClass("notes-selected");
+        $(".toolbar-container").removeClass("citation-selected");
+        $(".toolbar-container").addClass("keywords-selected");
     });
 
     $("#citation").click(function () {

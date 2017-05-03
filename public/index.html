@@ -22,11 +22,11 @@
 <body>
 
     <!--Icons-->
-    <div class="click" id="logo-icon" style="display: none;">
+    <div class="click icons" id="logo-icon" style="display: none;">
         <img class="small-icon" src="img/dawn.png">
     </div>
-    <div class="click" id = "account-icon" style="display: none;">
-        <img id="small-icon" src="img/account.png">
+    <div class="click icons" id = "account-icon" style="display: none;">
+        <img class="small-icon" src="img/account.png">
     </div>
 
     <div id="search-view">
@@ -95,34 +95,39 @@
             </div>
             <div class="col-md-2 article-col">
                 <div id = "article-toolbox" class="article-field">
-                    <div class="toolbar-container keywords-selected">
-                        <div class="toolbar scrollbar style-1" id="keyword-list">
+                    <div id="toolbar-container" class="scrollbar style-1">
+                        <div class="toolbar" id="keyword-list">
                             <h4 class="list-keyword">gatsby</h4>
                             <h4 class="list-keyword">nick</h4>
                             <h4 class="list-keyword-selected list-keyword">blue</h4>
                         </div>
-                        <div class="toolbar scrollbar style-1" id="bibliography" style="display: none">
-                            <h4 class="citation">Douglass, Frederick. <i>Narrative of the Life of Frederick Douglass.</i> N.p.: Dover Publications, 1995. Print.</h4>
-                        </div>
-                        <div class="toolbar" id="notes-panel" style="display: none">
-                            <h4 class="note-pad">Notepad</h4>
-                            <textarea id="pad" class="scrollbar style-1"></textarea>
-                        </div>
+
+                        <!--<div class="toolbar" id="bibliography" style="display: none">-->
+                            <!--<h4 class="citation">Douglass, Frederick. <i>Narrative of the Life of Frederick Douglass.</i> N.p.: Dover Publications, 1995. Print.</h4>-->
+                        <!--</div>-->
+                        <!--<div class="toolbar" id="notes-panel" style="display: none">-->
+                            <!--<h4 class="note-pad">Notepad</h4>-->
+                            <!--<textarea id="pad" class="scrollbar style-1"></textarea>-->
+                        <!--</div>-->
                     </div>
-                    <div class="toolbar-buttons row">
-                        <div class="col col-sm-4">
+                    <div id="toolbar-buttons" class="row">
+                        <div class="col col-sm-4 toolbar-button-col">
                             <div class="tb-container click keywords-selected" id="keywords">
-                                <span class="tb-button glyphicon glyphicon-list"></span>
+                                <div class="main-container">
+                                    <div class="main-content">
+                                        <i class="tb-button glyphicon glyphicon-list"></i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col col-sm-4">
+                        <div class="col col-sm-4 toolbar-button-col">
                             <div class="tb-container click" id="citation">
-                                <span class="tb-button glyphicon glyphicon-education"></span>
+                                <i class="tb-button glyphicon glyphicon-education"></i>
                             </div>
                         </div>
-                        <div class="col col-sm-4">
+                        <div class="col col-sm-4 toolbar-button-col">
                             <div class="tb-container click" id="notes">
-                                <span class="tb-button glyphicon glyphicon-pencil"></span>
+                                <i class="tb-button glyphicon glyphicon-pencil"></i>
                             </div>
                         </div>
                     </div>
