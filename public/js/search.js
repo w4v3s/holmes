@@ -9,6 +9,8 @@ var array;
 var dots;
 var noteindex;
 $(document).ready(function(){
+    enableScrolling();
+
     $("#title-container").animate({
         top: "-=15vh",
         opacity:1.0
@@ -66,12 +68,33 @@ $(document).ready(function(){
         $(".toolbar-container").addClass("notes-selected");
         $(".list-keyword").click(function (){
             $(".list-keyword").removeClass("list-keyword-selected");
-            $(this).addClass("lkselected");
         })
     });
 
     setupKeywordClick();
 });
+function scrollUp(){
+
+}
+function scrollDown(){
+
+}
+function enableScrolling(){
+    $("#div1").click(function(e){
+        if (e.shiftKey) {
+            $('html, body').animate({
+                scrollTop: $("#div2").offset().top
+            }, 500);
+        }
+    });
+    $("#div2").click(function(e){
+        if (e.shiftKey) {
+            $('html, body').animate({
+                scrollTop: $("#div1").offset().top
+            }, 500);
+        }
+    });
+}
 function startLoading(){
     dots = window.setInterval( function() {
         var wait = document.getElementById("wait");
@@ -110,7 +133,9 @@ function searchBarMove(){
         }, 1000, function() {
         });
         searchPage = true;
-        $(".title-text").fadeOut("medium");
+        $("#title-container").fadeOut("medium");
+        $(".term-button").fadeIn("medium");
+
     }
 }
 function searchValues(){
