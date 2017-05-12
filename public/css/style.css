@@ -1,18 +1,21 @@
 html{
-    /*background-image: url("img/sunrise.jpg");*/
-    /*background-color: #cccccc;*/
-    /*background:linear-gradient(10deg, #A85B65, #3F426D, #222546 );*/
+    height: 200vh;
+    width: 100%;
+    background: linear-gradient(-50deg, #808080, #3fada8);
 }
+
 body{
     height: 200vh;
-    width: 100vw;
+    width: 100%;
     color:white;
     font-family: 'Lato', sans-serif;
-    background: url("../img/sunrise4.jpg") no-repeat;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+    background: url("../img/pattern.png");
+    background-size: 100% 50%;
+    /*background: url("../img/sunrise4.jpg") no-repeat;*/
+    /*-webkit-background-size: cover;*/
+    /*-moz-background-size: cover;*/
+    /*-o-background-size: cover;*/
+    /*background-size: cover;*/
 }
 .main-content{
     text-align:center;
@@ -47,21 +50,9 @@ h2,h3,h4,h5{
 }
 
 /*Layout*/
-#search-view{
+.view{
     height: 100vh;
-    width: 100vw;
-}
-#introduction-view{
-    height: 100vh;
-    width: 100vw;
-}
-#article-view{
-    height: 100vh;
-    width: 100vw;
-}
-#loading-view{
-    height: 100vh;
-    width: 100vw;
+    width: 100%;
 }
 
 /*Scrollbar*/
@@ -104,7 +95,7 @@ h2,h3,h4,h5{
     position: absolute;
     top:40vh;
     text-align: center;
-    width: 100vw;
+    width: 100%;
     opacity: 0;
 }
 #title-text{
@@ -118,7 +109,7 @@ h2,h3,h4,h5{
 
 /*Search*/
 #search-container{
-    width:100vw;
+    width:100%;
     position: relative;
     text-align: center;
 }
@@ -150,7 +141,7 @@ h2,h3,h4,h5{
 }
 .article-field{
     height: inherit;
-    padding: 10px 10px;
+    padding: 30px;
     background: rgba(0,0,0,0.5);
     /*border-radius: 20px;*/
     /*background: rgba(0,0,0,0.1);*/
@@ -165,7 +156,7 @@ h2,h3,h4,h5{
 .article{
     padding: 20px;
     margin-bottom: 10px;
-    background: rgba(0,0,0,0.9);
+    background: rgba(0,0,0,0.5);
     border: rgb(0,0,0) 2px solid;
 }
 .article-list-elements{
@@ -324,7 +315,6 @@ h2,h3,h4,h5{
     background-color: rgba(255, 250, 130,0.5)
 }
 #article-content{
-    padding: 30px;
     height: inherit;
     overflow: auto;
 }
