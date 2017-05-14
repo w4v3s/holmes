@@ -6,7 +6,8 @@ body{
     height: 200vh;
     width: 100vw;
     color:white;
-    font-family: 'Lato', sans-serif;
+    /*font-family: 'Lato', sans-serif;*/
+    font-family: 'Source Sans Pro', sans-serif;
     background: linear-gradient(-50deg, #808080, #3fada8);
     overflow-x: hidden;
     /*background: url("../img/sunrise4.jpg") no-repeat;*/
