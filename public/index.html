@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Dawn</title>
-    <link href="https://fonts.googleapis.com/css?family=Macondo" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -38,28 +36,47 @@
 
                 <div id="search-container" style="display: none">
                     <!--<div class="search-term search-term-up">+</div>-->
-                    <input id="search-bar" class = "form-control" type="text" name="search-term" placeholder="type something" autocomplete="off" oninput="searchBarMove()" autofocus>
+                    <input id="search-bar" class = "form-control" type="text" name="search-term" placeholder="type something" autocomplete="off" autofocus>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="introduction-view" class="view" style="display: none;">
+    <div id="introduction-view" class="view">
         <div class="main-container">
             <div class="main-content">
-                <div class="info-container" style="display: none">
-                    <h1>dawn</h1>
-                    <p>A Researcher's Search Engine</p>
-
-                    <h2>Key Words</h2>
-                    <p>Generates important key words for each article, highlighting them in the text for easy reading.</p>
-                    <h2>Notes</h2>
-                    <p>Saves notes to each project, enabling you to take notes while searching through articles.</p>
-                    <h2>Citations</h2>
-                    <p>Automatically cites documents for you, exporting a bibliography in MLA & APA formatting</p>
-                    <h2>Search</h2>
-                    <p>Offers concept searching and allows you to find important concepts related to the search term</p>
+                <h2 id="catchphrase">a researcher's search engine</h2>
+                <hr id="intro-break"/>
+                <div id="intro-container">
+                    <div class="intro-panel">
+                        <img class="intro-image" src="img/">
+                        <h3 class="intro-key">Key Words</h3>
+                        <h4 class="intro-desc">Generates important key words for each article, highlighting them in the text for easy reading.</h4>
+                    </div>
+                    <div class="intro-panel">
+                        <img class="intro-image" src="img/">
+                        <h3 class="intro-key">Key Words</h3>
+                        <h4 class="intro-desc">Generates important key words for each article, highlighting them in the text for easy reading.</h4>
+                    </div>
+                    <div class="intro-panel">
+                        <img class="intro-image" src="img/">
+                        <h3 class="intro-key">Key Words</h3>
+                        <h4 class="intro-desc">Generates important key words for each article, highlighting them in the text for easy reading.</h4>
+                    </div>
+                    <div class="intro-panel">
+                        <img class="intro-image" src="img/">
+                        <h3 class="intro-key">Key Words</h3>
+                        <h4 class="intro-desc">Generates important key words for each article, highlighting them in the text for easy reading.</h4>
+                    </div>
                 </div>
+                <h2>Key Words</h2>
+                <p></p>
+                <h2>Notes</h2>
+                <p>Saves notes to each project, enabling you to take notes while searching through articles.</p>
+                <h2>Citations</h2>
+                <p>Automatically cites documents for you, exporting a bibliography in MLA & APA formatting</p>
+                <h2>Search</h2>
+                <p>Offers concept searching and allows you to find important concepts related to the search term</p>
             </div>
         </div>
     </div>
@@ -77,7 +94,7 @@
         </div>
     </div>
 
-    <div id="article-view" class="view">
+    <div id="article-view" class="view" style="display: none;">
         <div class="row" id="article-container">
             <div class="col-md-3 article-col">
                 <div id="article-list-container" class="article-field">

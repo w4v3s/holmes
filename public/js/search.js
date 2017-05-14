@@ -9,7 +9,6 @@ var array;
 var dots;
 var noteindex;
 $(document).ready(function(){
-    enableScrolling();
 
     $("#title-container").animate({
         top: "-=15vh",
@@ -20,10 +19,13 @@ $(document).ready(function(){
     });
 
     $("#search-bar").keydown(function(event){
-        if(event.which=="13" && searchPage)
+        if(!searchPage){
+            shrinkSearchBar();
+            searchPage = true;
+        }
+        if(event.which=="13")
         {
-            searchBarMove();
-            searchValues();
+            search();
         }
     });
 
@@ -74,24 +76,24 @@ $(document).ready(function(){
     setupKeywordClick();
 });
 function scrollUp(){
-
+    $('html, body').animate({
+        scrollTop: $("#search-view").offset().top
+    }, 500);
 }
 function scrollDown(){
-
+    $('html, body').animate({
+        scrollTop: $("#article-view").offset().top
+    }, 500);
 }
 function enableScrolling(){
-    $("#div1").click(function(e){
+    $("#search-view").click(function(e){
         if (e.shiftKey) {
-            $('html, body').animate({
-                scrollTop: $("#div2").offset().top
-            }, 500);
+            scrollDown();
         }
     });
-    $("#div2").click(function(e){
+    $("#article-view").click(function(e){
         if (e.shiftKey) {
-            $('html, body').animate({
-                scrollTop: $("#div1").offset().top
-            }, 500);
+            scrollUp();
         }
     });
 }
@@ -125,25 +127,29 @@ function setupSecondaryClick(){
         getData(searchTerm);
     })
 }
-function searchBarMove(){
-    if (!searchPage){
-        $("#search-bar").animate({
-            width: "40vw",
-            padding:"30px"
-        }, 1000, function() {
-        });
-        searchPage = true;
-        $("#title-container").fadeOut("medium");
-        $(".term-button").fadeIn("medium");
-
-    }
+function shrinkSearchBar(){
+    var sb = $("#search-bar");
+    sb.animate({
+        width: "40vw",
+        'min-width':"300px",
+        padding:"30px"
+    }, 1000, function() {
+    });
+    $("#title-container").fadeOut("medium");
+    $(".term-button").fadeIn("medium");
 }
-function searchValues(){
+function search(){
+    $("#introduction-view").hide();
+    $("#loading-view").fadeIn("fast");
+    $('html, body').animate({
+        scrollTop: $("#loading-view").offset().top
+    }, 500);
     console.log("Searching...");
     var searchTerm = $("#search-bar").val();
-    getData(searchTerm);
+    // getData(searchTerm);
 }
 function getData(term){
+    enableScrolling();
     startLoading();
     $.ajax({
         type: "POST",

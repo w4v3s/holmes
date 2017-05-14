@@ -9,7 +9,7 @@ body{
     width: 100%;
     color:white;
     font-family: 'Lato', sans-serif;
-    background: url("../img/pattern.png");
+    background: url("../img/pattern.png") no-repeat;
     background-size: 100% 50%;
     /*background: url("../img/sunrise4.jpg") no-repeat;*/
     /*-webkit-background-size: cover;*/
@@ -53,6 +53,8 @@ h2,h3,h4,h5{
 .view{
     height: 100vh;
     width: 100%;
+    max-height: 100vh;
+    max-width: 100%;
 }
 
 /*Scrollbar*/
@@ -102,8 +104,6 @@ h2,h3,h4,h5{
     display: inline;
     text-align: center;
     font-size: 100px;
-    font-family: 'Macondo', cursive !important;
-    /*font-family: 'Raleway', sans-serif !important;*/
     padding: 20px;
 }
 
@@ -123,6 +123,23 @@ h2,h3,h4,h5{
     color:white;
     border:none;
     width: 60vw;
+}
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #909;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #909;
+    opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #909;
+    opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color:    #909;
+}
+#search-bar::-webkit-input-placeholder{
+    color: darkgray;
 }
 .search-term{
     background: rgba(0,0,0,0.5);
@@ -421,25 +438,28 @@ h2,h3,h4,h5{
     padding: 30px 0;
     word-wrap: break-word;
 }
-#works-cited{
-
+#works-cited {
 }
 
-#wait{
-    font-size: 150px;
-    color:rgba(0,0,0,.3);
+/*Introduction*/
+#catchphrase{
+    font-size: 40px;
 }
-
-#pad{
-    width: 12vw;
-    height:47vh;
-    overflow:auto;
-    background-color: inherit;
-    border-style: none;
-    outline:0;
+#intro-break{
+    color: white;
+    width: 70vw;
+    padding: 40px 0;
 }
-
-/*Login*/
+#intro-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.intro-panel{
+    margin: 30px;
+    width: calc(100% - 120px / 4);
+}
 
 /*Secondary*/
 .secondary-container{
