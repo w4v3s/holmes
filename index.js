@@ -27,7 +27,6 @@ try {
     haven_key = config['haven_key'];
 } catch (err) {
     throw err;
-    process.exit(1);
 }
 
 /*Setup*/
@@ -266,106 +265,6 @@ function getFullArticle(url, callback) {
         }
     });
 }
-
-
-// app.post('/search', function(request, response) {
-//     request.on("data",function(chunk){
-//         var str = ''+chunk;
-//         var question = str.substring(str.indexOf("=")+1,str.length);
-//         question = question.replace(/\+/g, " ");
-//         console.log(question);
-//
-//         BingWebSearch.web(question, {
-//             top: 10
-//         }, function(error, res, body){
-//             var webpages = [];
-//             var titles = [];
-//             for(a = 0; a<10; a++){
-//                 webpages.push(body.webPages.value[a].displayUrl);
-//                 titles.push(body.webPages.value[a].name);
-//             }
-//             console.log(webpages);
-//             console.log(titles);
-//
-//             var ajaxCallsRemaining = 10;
-//             var sentiment = [];
-//             var keywords = [];
-//             var summaries = [];
-//             var secondary = [];
-//
-//             webpages.forEach(function(arrayElement) {
-//                 var parameters = {
-//                     'url': arrayElement,
-//                     'features': {
-//                         'sentiment': {
-//                             'limit': 5
-//                         },
-//                         'keywords':{
-//                             'limit': 5
-//                         },
-//                         'concepts':{
-//                             'limit': 5
-//                         }
-//                     }
-//                 };
-//                 natural_language_understanding.analyze(parameters, function(err, res) {
-//                     if (err) {
-//                         console.log('error', err);
-//                         // --ajaxCallsRemaining;
-//                         // if (ajaxCallsRemaining <= 0) {
-//                         //     response.send([titles, webpages,sentiment,keywords]);
-//                         // }
-//                         sentiment.push(["None"]);
-//                         keywords.push(["None"]);
-//                     }
-//                     else{
-//                         var s = [];
-//                         var k = [];
-//                         var c = [];
-//                         for(a = 0; a<res.keywords.length;a++){
-//                             k.push(res.keywords[a].text);
-//                         }
-//                         for(a = 0; a<res.sentiment.length;a++){
-//                             s.push(res.sentiment.document.label);
-//                         }
-//                         for(a = 0; a<res.concepts.length;a++){
-//                             k.push(res.concepts[a].text);
-//                         }
-//                         console.log(k);
-//                         console.log(s);
-//                         sentiment.push(s);
-//                         keywords.push(k);
-//                         secondary.push(c);
-//                         // --ajaxCallsRemaining;
-//                         // if (ajaxCallsRemaining <= 0) {
-//                         //     response.send([titles, webpages,sentiment,keywords]);
-//                         // }
-//
-//                         textapi.summarize({
-//                             url: arrayElement,
-//                             sentences_number: 1
-//                         }, function(error, res) {
-//                             if (error === null) {
-//                                 summaries.push(res.sentences[0]);
-//                                 --ajaxCallsRemaining;
-//                                 if (ajaxCallsRemaining <= 0) {
-//                                     response.send([titles,sentiment,keywords,summaries]);
-//                                 }
-//                             }
-//                             else{
-//                                 console.log(error);
-//                                 --ajaxCallsRemaining;
-//                             }
-//                         });
-//                     }
-//
-//                 });
-//             });
-//
-//
-//         });
-//     });
-// });
 
 
 /*Helper Functions*/
