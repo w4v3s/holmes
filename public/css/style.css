@@ -165,7 +165,6 @@ h2,h3,h4,h5{
 }
 .article-field{
     height: inherit;
-    padding: 30px;
     float: left;
 }
 #article-container{
@@ -247,7 +246,7 @@ h2,h3,h4,h5{
     flex-direction: row;
     flex-wrap: wrap;
     margin-bottom: 20px;
-    justify-content: center;
+    justify-content: space-around;
 }
 #list-navigation{
     order:3;
@@ -274,7 +273,6 @@ h2,h3,h4,h5{
     height: 30px;
     vertical-align: middle;
     display: inline-block;
-    margin: 5px 5%;
     transition: font-size ease .2s;
 }
 .list-button:hover{
@@ -351,7 +349,7 @@ h2,h3,h4,h5{
     height: inherit;
     width:80%;
     float:left;
-    padding-right: 30px;
+    padding: 0 30px;
 }
 #article-title-button{
     order:2;
@@ -393,7 +391,6 @@ h2,h3,h4,h5{
     flex-direction: column;
     align-items: flex-end;
     width:20%;
-    padding-left: 30px;
 }
 #toolbar-container {
     order: 1;
@@ -504,14 +501,13 @@ h2,h3,h4,h5{
 #intro-break{
     color: white;
     width: 70vw;
-    padding: 20px 0;
 }
 #intro-container{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding: 0 15vw;
+    padding: 0 10%;
 }
 .intro-panel{
     margin: 30px;
