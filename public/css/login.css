@@ -2,6 +2,9 @@ body{
     height: 100vh !important;
 }
 
+#loading-view{
+    height: 400px;
+}
 #login-container{
     position: relative;
     display: inline-block;
@@ -49,7 +52,7 @@ body{
     margin: 20px 0;
 }
 .input-row{
-    margin: 20px 0;
+    margin: 30px 0;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -89,7 +92,7 @@ body{
 }
 
 .submit-button{
-    margin: 20px 0;
+    margin: 30px 0;
     text-align: center;
     height: 50px;
 }
