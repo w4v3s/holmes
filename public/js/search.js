@@ -126,6 +126,14 @@ function setupSecondaryClick(){
     })
 >>>>>>> origin/master
 }
+function setupSecondaryClick(){
+    $(".secondary-question").click(function(){
+        var searchTerm = $(this).text();
+        $("#search-bar").val(searchTerm);
+        $(".secondary-container").fadeOut("slow");
+        getData(searchTerm);
+    })
+}
 function shrinkSearchBar(){
     $("#search-bar").animate({
         width: "40vw",
@@ -209,7 +217,16 @@ function resetInfo(){
     $("#keyword-list").empty();
 
 }
-
+function appendSecondary(index){
+    for(var i=0;i<obj[index].concepts.length;i++)
+    {
+        $("<h2/>", {
+            html: obj[index].concepts[i],
+            class:"secondary-question click"
+        }).appendTo(".secondary-container");
+    }
+    setupSecondaryClick();
+}
 function appendKeywords(index){
     var list = "";
     if(obj[index].keywords !=null) {
@@ -266,6 +283,7 @@ function appendArticleList(){
 }
 function displayArticleView(){
     $(".article-view").fadeIn("slow");
+    $(".secondary-container").fadeIn("slow");
 }
 function appendBiblio(index){
     $("<h4 class=\"citation\">"+obj[index].bibliography+"<\/h4>").appendTo("#bibliography");
@@ -300,6 +318,7 @@ function initNotes(index){
 function openArticle(index){
     $(".article-content").empty();
     $("#keyword-list").empty();
+    $(".secondary-container").empty();
     $("#bibliography").empty();
     initNotes(index);
 
@@ -321,6 +340,7 @@ function openArticle(index){
     $(list).appendTo($(".article-content"));
 
     appendKeywords(index);
+    appendSecondary(index);
     appendBiblio(index);
     updateNotepad(index);
 }
