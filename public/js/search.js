@@ -102,6 +102,30 @@ function enableScrolling(){
         }
     });
 }
+<<<<<<< HEAD
+function startLoading(){
+    dots = window.setInterval( function() {
+        var wait = document.getElementById("wait");
+        if ( wait.innerHTML.length > 3 )
+            wait.innerHTML = ".";
+        else
+            wait.innerHTML += ".";
+    }, 100);
+    $(".loading-view").fadeIn("slow");
+}
+function stopLoading(){
+    clearInterval(dots);
+    $(".loading-view").fadeOut("slow");
+=======
+function setupSecondaryClick(){
+    $(".secondary-question").click(function(){
+        var searchTerm = $(this).text();
+        $("#search-bar").val(searchTerm);
+        $(".secondary-container").fadeOut("slow");
+        getData(searchTerm);
+    })
+>>>>>>> origin/master
+}
 function setupSecondaryClick(){
     $(".secondary-question").click(function(){
         var searchTerm = $(this).text();
