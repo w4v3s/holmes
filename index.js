@@ -29,6 +29,8 @@ try {
     throw err;
 }
 
+var PER_PAGE = 5;
+var KEYWORDS = 5;
 /*Setup*/
 var app = express();
 
@@ -81,18 +83,18 @@ function getSummary(text, title, length, callback) {
     });
 }
 
-function languageAnalysis(text, callback) {
+function languageAnalysis(text,n, callback) {
     natural_language_understanding.analyze({
         'text': text,
         'features': {
             'sentiment': {
-                'limit': 5
+                'limit': n
             },
             'keywords': {
-                'limit': 5
+                'limit': n
             },
             'concepts': {
-                'limit': 3
+                'limit': n
             }
         }
     }, function(err, res) {
@@ -374,7 +376,7 @@ app.post('/search', function(req, response) {
         var question = str.substring(str.indexOf("=") + 1, str.length);
         question = question.replace(/\+/g, " ");
 
-        natureJournal(question, 10, function(entityArray) {
+        natureJournal(question, 1, function(entityArray) {
             console.log("array made");
             var wait = entityArray.length;
             if (wait == 0) {
@@ -383,25 +385,26 @@ app.post('/search', function(req, response) {
             entityArray.forEach(function(entry) {
                 console.log("entered array");
                 getCitationMla(entry.title, entry.publisher, entry.publicationDate.substring(0, 4), entry.authors, function(citation) {
-                    console.log("\tgot citation");
-                    entry.bibliography = citation;
-                     getCitationApa(entry.title, entry.publisher, entry.publicationDate.substring(0, 4), entry.authors, function(citation) {
-                    console.log("\tgot citation");
-                    entry.bibliography = citation;
-                });
-                    languageAnalysis(entry.abstract, function(s, k, c) {
-                        console.log("\t\tlanguage analysis");
-                        entry.sentiment = s;
-                        entry.keywords = k;
-                        entry.concepts = c;
+                    console.log("\tgot MLA citation");
+                    entry.mla = citation;
+                    getCitationApa(entry.title, entry.publisher, entry.publicationDate.substring(0, 4), entry.authors, function(citation) {
+                        console.log("\tgot APA citation");
+                        entry.apa = citation;
 
-                        getSummary(entry.abstract, entry.title, 1, function(s) {
-                            console.log("\t\t\tgot summary");
-                            entry.summary = s;
-                            --wait;
-                            if (wait <= 0) {
-                                response.send(entityArray);
-                            }
+                        languageAnalysis(entry.abstract,1, function(s, k, c) {
+                            console.log("\t\tlanguage analysis");
+                            entry.sentiment = s;
+                            entry.keywords = k;
+                            entry.concepts = c;
+
+                            getSummary(entry.abstract, entry.title, 1, function(s) {
+                                console.log("\t\t\tgot summary");
+                                entry.summary = s;
+                                --wait;
+                                if (wait <= 0) {
+                                    response.send(entityArray);
+                                }
+                            });
                         });
                     });
                 });

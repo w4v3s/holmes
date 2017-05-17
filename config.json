@@ -2,8 +2,8 @@
     "port" : 8000,
     "bluemix" : {
         "url": "https://gateway.watsonplatform.net/natural-language-understanding/api",
-        "username": "b9a28510-fe8e-4605-bc1e-ee8434cec916",
-        "password": "VknWNQ3dtRnJ"
+        "username": "ca369f8d-fa53-4bf7-9076-df54ce045dfe",
+        "password": "aHyU5tAf1zP8"
     },
 
     "aylien_key" : "c49162c07d76aef113d427c8bf7b5beb",

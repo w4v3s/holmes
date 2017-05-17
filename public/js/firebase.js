@@ -26,12 +26,13 @@ var structure = {
                     abstract: text,
                     publisher: body[a].data.publisher,
                     publicationDate: body[a].data.datePublished,
-                    'mla-citation':"",
-                    'apa-citation':"",
+                    apa:"",
+                    mla:"",
                     sentiment:"",
                     keywords:"",
                     concepts:"",
-                    summary:""
+                    summary:"",
+                    journal:""
                 }
             ]
         }
