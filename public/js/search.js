@@ -1,13 +1,13 @@
 /**
  * Created by andre on 4/8/2017.
  */
+
 //Globals
 var searchPage = false;
-var secondaries = [];
 var obj;
-var array;
-var dots;
-var noteindex;
+var loggedIn = false;
+var uid;
+
 document.addEventListener('DOMContentLoaded', function(){
     var trigger = new ScrollTrigger({
         addHeight: true,
@@ -15,9 +15,34 @@ document.addEventListener('DOMContentLoaded', function(){
     });
 });
 $(document).ready(function(){
-    var quill = new Quill('#notes-panel', {
-        theme: 'bubble'
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            uid = user.uid;
+            loggedIn = true;
+        } else {
+            $("#account-logout").fadeOut();
+            // User is signed out.
+            // ...
+        }
     });
+
+    $("#account-icon").click(function(){
+        if(loggedIn){
+
+        }
+        else{
+            window.location = 'login.html';
+        }
+    });
+
+    $("#account-logout").click(function(){
+        firebase.auth().signOut().then(function() {
+            window.location = 'index.html';
+        }).catch(function(error) {
+            alert("There was an error signing out.");
+        });
+    });
+
     $(".list-keyword").mousedown(function(e){
         console.log(e);
         if( e.button == 0 ){
@@ -36,7 +61,11 @@ $(document).ready(function(){
         top: "-=150px",
         opacity:1.0
     }, 1000, function() {
-        $(".icons").fadeIn("slow");
+        $("#account-icon").fadeIn("slow");
+        $("#logo-icon").fadeIn("slow");
+        if(loggedIn){
+            $("#account-logout").fadeIn();
+        }
         $("#search-container").fadeIn("slow");
     });
 
@@ -49,12 +78,6 @@ $(document).ready(function(){
         {
             search();
         }
-    });
-
-    $('#account-icon').click(function() {
-        $('#login-content').slideToggle();
-        $('#login-content').toggleClass('active');
-
     });
 });
 function scrollUp(){
@@ -79,6 +102,7 @@ function enableScrolling(){
         }
     });
 }
+<<<<<<< HEAD
 function startLoading(){
     dots = window.setInterval( function() {
         var wait = document.getElementById("wait");
@@ -92,6 +116,15 @@ function startLoading(){
 function stopLoading(){
     clearInterval(dots);
     $(".loading-view").fadeOut("slow");
+=======
+function setupSecondaryClick(){
+    $(".secondary-question").click(function(){
+        var searchTerm = $(this).text();
+        $("#search-bar").val(searchTerm);
+        $(".secondary-container").fadeOut("slow");
+        getData(searchTerm);
+    })
+>>>>>>> origin/master
 }
 function shrinkSearchBar(){
     $("#search-bar").animate({
@@ -105,7 +138,8 @@ function shrinkSearchBar(){
 function riseSearchBar(){
     $("#search-container").animate({
         top:"30px",
-        "margin-top":"0"
+        "margin-top":"0",
+        'border-radius':"5px"
     }, 1000, function() {
     });
 }
@@ -119,6 +153,9 @@ function search(){
             height: "100vh"
         }, 500, function(){
             $(".cssload-thecube").fadeIn();
+            var quill = new Quill('#notes-panel', {
+                theme: 'bubble'
+            });
 
             $("#loading-view").fadeOut("medium", function(){
                 $("#article-view").fadeIn();

@@ -14,15 +14,14 @@
 
 	<script type="text/javascript" src="js/jquery.js" defer></script>
 	<script type="text/javascript" src="js/bootstrap.js" defer></script>
+	<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js" defer></script>
 
-	<script type="text/javascript" src = "js/login.js" defer></script>
+    <script type="text/javascript" src = "js/firebase.js" defer></script>
+    <script type="text/javascript" src = "js/login.js" defer></script>
 </head>
 <body>
-	<div class="icons" id="logo-icon">
+	<div class="click icons" id="logo-icon">
 		<img class="small-icon" src="img/dawn.png">
-	</div>
-	<div class="click icons" id = "account-icon">
-		<img class="small-icon" src="img/account.png">
 	</div>
 
 	<div id="login-view" class="view">
@@ -43,6 +42,7 @@
 					</div>
 					<div id="login" class="login-bars">
 						<h1 class="login-title">welcome back</h1>
+                        <h4 id="login-error" class="error" style="display: none;"></h4>
 						<div class="input-row">
 							<div class="input-name">email</div>
 							<input id="login-email" class="form-control input-bar" type="email" name="email" placeholder="email@email.com" autocomplete="off">
@@ -54,13 +54,14 @@
 						<div class="submit-button">
 							<div class="main-container">
 								<div class="main-content">
-									<div class="submit click">Submit</div>
+									<div class="submit click" onclick="login()">Submit</div>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div id="register" class="login-bars" style="display: none">
-						<h1 class="login-title">welcome to holmes</h1>
+						<h1 class="login-title">welcome to dawn</h1>
+                        <h4 id="register-error" class="error" style="display: none;"></h4>
 						<div class="input-row">
 							<div class="input-name">email</div>
 							<input id="register-email" class="form-control input-bar" type="email" name="email" placeholder="email@email.com" autocomplete="off">
@@ -69,18 +70,27 @@
 							<div class="input-name">password</div>
 							<input id="register-pass" class="form-control input-bar" type="password" name="password" placeholder="password123" autocomplete="off">
 						</div>
-						<div class="input-row">
-							<div class="input-name">password</div>
-							<input id="register-pass-check" class="form-control input-bar" type="password" name="password" placeholder="password123" autocomplete="off">
-						</div>
 						<div class="submit-button">
 							<div class="main-container">
 								<div class="main-content">
-									<div class="submit click">Submit</div>
+									<div class="submit click" onclick="register()">Submit</div>
 								</div>
 							</div>
 						</div>
 					</div>
+                    <div id="loading-view" style="display: none">
+                        <div class="main-container">
+                            <div class="main-content">
+                                <div class="cssload-thecube">
+                                    <div class="cssload-cube cssload-c1"></div>
+                                    <div class="cssload-cube cssload-c2"></div>
+                                    <div class="cssload-cube cssload-c4"></div>
+                                    <div class="cssload-cube cssload-c3"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
 				</div>
 			</div>
 		</div>
